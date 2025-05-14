@@ -80,6 +80,13 @@ function SidebarMenu({ collapsed }) {
             { title: 'Add Decorations', path: "/create/create-decoration" },
             
           ]
+        },
+
+        {
+          id: 'Orders',
+          title: 'Orders',
+          icon: faHandsPraying,
+          path:"/orders"
         }
         // {
         //   id: 'bhavya-ayojan',

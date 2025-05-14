@@ -5,6 +5,7 @@ import { createProduct } from "../../Services/product-api-service";
 import { fetchCategories } from '../../redux/categoriesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaRupeeSign } from "react-icons/fa";
+import RichTextEditor from "react-rte";
 
 const CreateDecorations = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const CreateDecorations = () => {
     product_id: "",
     name: "",
     slug_url: "",
-    description: "",
+    description: RichTextEditor.createEmptyValue(),
     short_description: "",
     category: "",
     category_name: "",
@@ -28,6 +29,10 @@ const CreateDecorations = () => {
     other_images: [],
     child_categories: []
   });
+
+  const handleEditorChange = (value, fieldName) => {
+    setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
+  };
 
   // Generate a unique product ID
   const generateProductId = useCallback(() => {
@@ -143,31 +148,46 @@ const CreateDecorations = () => {
     try {
       const data = new FormData();
       
-      // Append all form data except files
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === "other_images") {
-          formData.other_images.forEach(file => data.append("other_images", file));
-        } else if (key === "child_categories") {
-          // Stringify array of child categories
-          data.append(key, JSON.stringify(value));
-        } else if (key !== "featured_image" && value !== null && value !== "") {
-          data.append(key, value);
-        }
-      });
+      // Convert RichTextEditor content to HTML string
+      const descriptionHTML = formData.description.toString('html');
       
-      if (formData.featured_image) {
-        data.append("featured_image", formData.featured_image);
+      // Append all form data
+      data.append('product_id', formData.product_id);
+      data.append('name', formData.name);
+      data.append('slug_url', formData.slug_url);
+      data.append('description', descriptionHTML);  // Use the converted HTML
+      data.append('short_description', formData.short_description);
+      data.append('category', formData.category);
+      data.append('category_name', formData.category_name);
+      data.append('price', formData.price);
+      data.append('unit', formData.unit);
+      data.append('stock_left', formData.stock_left);
+      data.append('isOffer', formData.isOffer);
+      data.append('status', formData.status);
+      
+      // Handle child categories
+      if (formData.child_categories.length > 0) {
+        data.append('child_categories', JSON.stringify(formData.child_categories));
       }
-
+      
+      // Handle images
+      if (formData.featured_image) {
+        data.append('featured_image', formData.featured_image);
+      }
+      
+      formData.other_images.forEach(file => {
+        data.append('other_images', file);
+      });
+  
       await createProduct(data);
       toast.success("Product created successfully!");
       
-      // Reset form after successful submission
+      // Reset form
       setFormData({
         product_id: generateProductId(),
         name: "",
         slug_url: "",
-        description: "",
+        description: RichTextEditor.createEmptyValue(),  // Reset to empty editor
         short_description: "",
         category: "",
         category_name: "",
@@ -432,15 +452,49 @@ const CreateDecorations = () => {
             <label className="block text-sm font-medium text-gray-700">
               Full Description <span className="text-red-500">*</span>
             </label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              rows="4"
-              placeholder="Detailed product description"
-              required
-            />
+           <RichTextEditor
+  value={formData.description}
+  onChange={(value) => handleEditorChange(value, "description")}
+  placeholder="Enter description & kit e.g. description: your description, kit: your kits and materials"
+  editorStyle={{
+    minHeight: "120px",
+  }}
+  toolbarConfig={{
+    display: [
+      'INLINE_STYLE_BUTTONS',
+      'BLOCK_TYPE_DROPDOWN',
+      'BLOCK_TYPE_BUTTONS',
+      'LINK_BUTTONS',
+      'HISTORY_BUTTONS',
+    ],
+    INLINE_STYLE_BUTTONS: [
+      { label: 'Bold', style: 'BOLD' },
+      { label: 'Italic', style: 'ITALIC' },
+      { label: 'Underline', style: 'UNDERLINE' },
+      { label: 'Code', style: 'CODE' },
+    ],
+    BLOCK_TYPE_DROPDOWN: [
+      { label: 'Normal', style: 'unstyled' },
+      { label: 'Heading Large', style: 'header-one' },
+      { label: 'Heading Medium', style: 'header-two' },
+      { label: 'Heading Small', style: 'header-three' },
+    ],
+    BLOCK_TYPE_BUTTONS: [
+      { label: 'UL', style: 'unordered-list-item' },
+      { label: 'OL', style: 'ordered-list-item' },
+      { label: 'Blockquote', style: 'blockquote' },
+    ],
+    LINK_BUTTONS: [
+      { label: 'Add Link', style: 'link' },
+      { label: 'Remove Link', style: 'remove-link' },
+    ],
+    HISTORY_BUTTONS: [
+      { label: 'Undo', style: 'undo' },
+      { label: 'Redo', style: 'redo' },
+    ]
+  }}
+/>
+
           </div>
 
           {/* Images */}
