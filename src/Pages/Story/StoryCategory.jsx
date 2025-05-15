@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { 
-  fetchStoryCategories, 
+import {
+  fetchStoryCategories,
   deleteStoryCategory,
   updateStoryCategory,
   createStoryCategory
@@ -56,10 +56,10 @@ const StoryCategory = () => {
       name: 'Image',
       cell: (row) => (
         row.image ? (
-          <img 
-            src={`http://localhost:3000${row.image}`} 
-            alt={row.title} 
-            width="50" 
+          <img
+            src={`http://localhost:3000${row.image}`}
+            alt={row.title}
+            width="50"
             height="50"
             style={{ borderRadius: '5px' }}
           />
@@ -74,17 +74,17 @@ const StoryCategory = () => {
       sortable: true,
     },
     {
-        name: 'Language',
-        selector: row => {
-          switch(row.language) {
-            case 'english': return 'English';
-            case 'hindi': return 'Hindi';
-            case 'sanskrit': return 'Sanskrit';
-            default: return row.language;
-          }
-        },
-        sortable: true,
+      name: 'Language',
+      selector: row => {
+        switch (row.language) {
+          case 'english': return 'English';
+          case 'hindi': return 'Hindi';
+          case 'sanskrit': return 'Sanskrit';
+          default: return row.language;
+        }
       },
+      sortable: true,
+    },
     {
       name: 'Meta Title',
       selector: row => row.metaTitle,
@@ -181,7 +181,7 @@ const StoryCategory = () => {
             <button className='btn btn-info' onClick={navigateToAddCategory}>
               <FaPlus className="me-2" />
               Add Category
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">

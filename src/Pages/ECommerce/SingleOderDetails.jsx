@@ -29,7 +29,7 @@ const SingleOrderDetails = () => {
             headers: { Authorization: token },
           })
         ]);
-        
+
         setOrder(orderRes.data.order);
         setDelivery(deliveryRes.data);
         setSelectedStatus(orderRes.data.order.orderStatus);
@@ -56,12 +56,12 @@ const SingleOrderDetails = () => {
   const getTimelineStatus = (currentStatus, timelineStatus) => {
     const statusOrder = ["placed", "payment", "processing", "shipped", "delivered"];
     const currentIndex = statusOrder.indexOf(
-      currentStatus === "completed" ? "delivered" : 
-      currentStatus === "in-progress" ? "shipped" : 
-      currentStatus.toLowerCase()
+      currentStatus === "completed" ? "delivered" :
+        currentStatus === "in-progress" ? "shipped" :
+          currentStatus.toLowerCase()
     );
     const timelineIndex = statusOrder.indexOf(timelineStatus);
-    
+
     if (timelineIndex < currentIndex) {
       return "completed";
     } else if (timelineIndex === currentIndex) {
@@ -82,18 +82,18 @@ const SingleOrderDetails = () => {
         { orderStatus: selectedStatus },
         { headers: { Authorization: token } }
       );
-      
+
       // Trigger the blink animation
       setStatusUpdated(true);
-      
+
       toast.success("Order status updated successfully!");
-      
+
       // Refresh the order data
       const response = await axios.get(`${BASE_URL}/e-store/orders/${orderId}`, {
         headers: { Authorization: token },
       });
       setOrder(response.data.order);
-      
+
       // Remove the blink animation after 3 seconds
       setTimeout(() => setStatusUpdated(false), 3000);
     } catch (error) {
@@ -130,7 +130,7 @@ const SingleOrderDetails = () => {
   return (
     <div className="order-details-container card mb-4">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
       {/* Order Header */}
       <div className="order-header">
         <h2>
@@ -246,7 +246,7 @@ const SingleOrderDetails = () => {
               <i className="fas fa-sync-alt"></i> Update Status
             </h3>
             <div className="status-update">
-              <select 
+              <select
                 className="status-select"
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -256,7 +256,7 @@ const SingleOrderDetails = () => {
                 <option value="shipped">Shipped</option>
                 <option value="delivered">Delivered</option>
               </select>
-              <button 
+              <button
                 className="update-btn"
                 onClick={handleStatusUpdate}
               >

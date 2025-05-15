@@ -43,7 +43,7 @@ const Story = () => {
         Uncategorized
       </span>
     );
-    
+
     const colors = {
       primary: 'bg-blue-100 text-blue-800',
       success: 'bg-green-100 text-green-800',
@@ -52,10 +52,10 @@ const Story = () => {
       info: 'bg-cyan-100 text-cyan-800',
       dark: 'bg-gray-800 text-white'
     };
-    
+
     const colorKeys = Object.keys(colors);
     const color = colorKeys[Math.abs(category.title?.length % colorKeys.length)] || 'primary';
-    
+
     return (
       <span className={`px-2 py-1 text-xs font-medium rounded ${colors[color]}`}>
         {category.title}
@@ -64,31 +64,31 @@ const Story = () => {
   };
 
   const columns = [
-    { 
-      name: "#", 
+    {
+      name: "#",
       selector: (row, index) => index + 1,
       width: "80px",
       center: true
     },
-    { 
-        name: "Image", 
-        selector: (row) => (
-          row.image ? (
-            <img
-              className="w-20 h-12 border rounded object-cover"
-              src={`http://localhost:3000${row.image}`}
-              alt={row.title}
-            />
-          ) : (
-            <div className="text-gray-500 text-sm">No Image</div>
-          )
-        ),
-        width: "120px",
-        wrap:"true",
-        center: true
-      },
-    { 
-      name: "Title", 
+    {
+      name: "Image",
+      selector: (row) => (
+        row.image ? (
+          <img
+            className="w-20 h-12 border rounded object-cover"
+            src={`http://localhost:3000${row.image}`}
+            alt={row.title}
+          />
+        ) : (
+          <div className="text-gray-500 text-sm">No Image</div>
+        )
+      ),
+      width: "120px",
+      wrap: "true",
+      center: true
+    },
+    {
+      name: "Title",
       selector: (row) => (
         <div className="font-semibold text-blue-600">
           {truncateText(row.title)}
@@ -96,25 +96,25 @@ const Story = () => {
       ),
       sortable: true,
       grow: 2,
-      wrap:"true"
+      wrap: "true"
 
     },
-    { 
-        name: "Category", 
-        selector: (row) => getCategoryBadge(row.category),
-        width: "150px"
-      },
-    { 
-      name: "Description", 
+    {
+      name: "Category",
+      selector: (row) => getCategoryBadge(row.category),
+      width: "150px"
+    },
+    {
+      name: "Description",
       selector: (row) => (
         <div className="text-sm text-gray-500">
           {truncateText(row.description, 200)}
         </div>
       ),
       grow: 3,
-    wrap:"true"
+      wrap: "true"
     },
-   
+
     {
       name: "Actions",
       selector: (row) => (
@@ -126,7 +126,7 @@ const Story = () => {
           >
             <FaEye className="h-5 w-5" />
           </button>
-          
+
           <button
             title="Sub Stories"
             className="p-2 text-green-500 hover:text-green-700 hover:bg-success rounded"
@@ -134,7 +134,7 @@ const Story = () => {
           >
             <FaList className="h-5 w-5" />
           </button>
-          
+
           <button
             title="Edit Story"
             className="p-2 text-indigo-500 hover:text-indigo-700 hover:bg-indigo-50 rounded"
@@ -142,7 +142,7 @@ const Story = () => {
           >
             <FaEdit className="h-5 w-5" />
           </button>
-          
+
           <button
             title="Delete Story"
             className="p-2 text-red hover:text-red hover:bg-danger rounded disabled:opacity-50"
@@ -166,7 +166,7 @@ const Story = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this story?")) return;
-    
+
     setDeletingId(id);
     try {
       const result = await deleteStory(id);
@@ -189,8 +189,8 @@ const Story = () => {
       <div className="bg-white card rounded-lg shadow-md overflow-hidden mb-6">
         <div className="card-header flex justify-between items-center bg-white border-b border-gray-200 px-6 py-4">
           <h5 className="text-xl font-semibold text-gray-800">Story Management</h5>
-          <Link 
-            to="/story/add-story" 
+          <Link
+            to="/story/add-story"
             className="inline-flex items-center px-3 py-2 bg-info text-white text-sm font-medium rounded-md hover:bg-info"
           >
             <FaPlus className="me-2" />
@@ -198,8 +198,8 @@ const Story = () => {
           </Link>
         </div>
         <div className="card-body p-6">
-          <ToastContainer 
-            position="top-right" 
+          <ToastContainer
+            position="top-right"
             autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -209,10 +209,10 @@ const Story = () => {
             draggable
             pauseOnHover
           />
-          
-          <GetTable 
-            data={storyData} 
-            columns={columns} 
+
+          <GetTable
+            data={storyData}
+            columns={columns}
             title=""
             pagination
             paginationPerPage={10}
@@ -228,8 +228,8 @@ const Story = () => {
                 <h3 className="mt-2 text-lg font-medium text-gray-900">No stories found</h3>
                 <p className="mt-1 text-sm text-gray-500">Get started by creating a new story.</p>
                 <div className="mt-6">
-                  <Link 
-                    to="/story/add-story" 
+                  <Link
+                    to="/story/add-story"
                     className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700"
                   >
                     <FaPlus className="h-4 w-4 mr-1" />

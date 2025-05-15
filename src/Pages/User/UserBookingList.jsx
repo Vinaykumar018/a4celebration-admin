@@ -197,9 +197,9 @@ const UserBookingList = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Cancellation</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 ></button>
@@ -208,17 +208,17 @@ const UserBookingList = () => {
                 <p>Are you sure you want to cancel this booking? This action cannot be undone.</p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success text-white" 
+                <button
+                  type="button"
+                  className="btn btn-success text-white"
                   onClick={handleConfirmCancel}
                   disabled={loading}
                 >
@@ -237,9 +237,9 @@ const UserBookingList = () => {
             <div className="modal-content">
               <div className="modal-header" style={{ backgroundColor: '#6c63ff' }}>
                 <h5 className="modal-title text-white">Booking Details</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   style={{ filter: 'invert(1)' }}
                   onClick={() => setViewModalVisible(false)}
                 ></button>
@@ -251,22 +251,22 @@ const UserBookingList = () => {
                     <div className='col-12'>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaIdCard className="text-primary me-2" />
-                        <strong>Booking ID:</strong> 
+                        <strong>Booking ID:</strong>
                         <span className="ms-2">{rowToView.bookingId}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaInfoCircle className="text-success me-2" />
-                        <strong>Pooja Name:</strong> 
+                        <strong>Pooja Name:</strong>
                         <span className="ms-2">{rowToView.bookingDetails.poojaName || 'N/A'}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaUser className="text-info me-2" />
-                        <strong>User Name:</strong> 
+                        <strong>User Name:</strong>
                         <span className="ms-2">{rowToView.userDetails.username || 'N/A'}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaPhone className="text-warning me-2" />
-                        <strong>Contact:</strong> 
+                        <strong>Contact:</strong>
                         <span className="ms-2">{rowToView.userDetails.contactNumber || 'N/A'}</span>
                       </div>
                     </div>
@@ -275,19 +275,19 @@ const UserBookingList = () => {
 
                 {/* More Information Section */}
                 <div className="p-4" style={{ backgroundColor: '#f8f6ff' }}>
-                  <div 
-                    className="common-flex align-items-center cursor-pointer mb-3" 
+                  <div
+                    className="common-flex align-items-center cursor-pointer mb-3"
                     onClick={() => setMoreInfoExpanded(!moreInfoExpanded)}
                     style={{ cursor: 'pointer' }}
                   >
                     <FaInfoCircle className="text-primary me-2" />
                     <h6 className="mb-0">More Information</h6>
-                    {moreInfoExpanded ? 
-                      <FaChevronUp className="ms-2" /> : 
+                    {moreInfoExpanded ?
+                      <FaChevronUp className="ms-2" /> :
                       <FaChevronDown className="ms-2" />
                     }
                   </div>
-                  
+
                   {moreInfoExpanded && (
                     <div className="row">
                       <div className="col-md-6 mb-3">
@@ -343,9 +343,9 @@ const UserBookingList = () => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setViewModalVisible(false)}
                 >
                   Close
@@ -355,7 +355,7 @@ const UserBookingList = () => {
           </div>
         </div>
       )}
-      
+
       <ToastContainer position="top-right" autoClose={3000} />
       <ReactTooltip id="tooltip" effect="solid" />
     </>

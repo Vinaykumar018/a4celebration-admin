@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { 
-  fetchProduct, 
-  deleteProduct, 
+import {
+  fetchProduct,
+  deleteProduct,
   updateFeaturedStatus,
-  updateStatus 
+  updateStatus
 } from '../../Services/productApiService';
 import GetTable from '../../Component/GetTable';
 import { FaEdit, FaEye, FaTrash, FaPlus } from 'react-icons/fa';
@@ -88,7 +88,7 @@ const ProductList = () => {
       const response = await updateFeaturedStatus(id, { isFeatured: newStatus });
 
       if (response?.success) {
-        setProducts(products.map(p => 
+        setProducts(products.map(p =>
           p._id === id ? { ...p, isFeatured: newStatus } : p
         ));
         toast.success(`Product marked as ${newStatus ? 'featured' : 'not featured'}`);
@@ -108,7 +108,7 @@ const ProductList = () => {
       const response = await updateStatus(id, { status: newStatus });
 
       if (response?.success) {
-        setProducts(products.map(p => 
+        setProducts(products.map(p =>
           p._id === id ? { ...p, status: newStatus } : p
         ));
         toast.success(`Status updated to ${newStatus}`);
@@ -171,7 +171,7 @@ const ProductList = () => {
     {
       name: 'Featured',
       cell: (row) => (
-        <span 
+        <span
           className={`badge ${row.isFeatured ? 'bg-success' : 'bg-secondary'}`}
           style={{ cursor: 'pointer' }}
           onClick={() => handleToggleFeatured(row._id)}
@@ -184,7 +184,7 @@ const ProductList = () => {
     {
       name: 'Status',
       cell: (row) => (
-        <span 
+        <span
           className={`badge ${row.status === 'active' ? 'bg-success' : 'bg-danger'}`}
           style={{ cursor: 'pointer' }}
           onClick={() => handleStatusToggle(row._id)}
@@ -237,14 +237,14 @@ const ProductList = () => {
         <div className="card-header pb-2 pt-4 card-border">
           <div className='common-flex justify-between item-center'>
             <h5 className="mb-3">Product List</h5>
-            <button 
-              className='btn btn-info' 
+            <button
+              className='btn btn-info'
               onClick={navigateToAddProduct}
               disabled={loading}
             >
               <FaPlus className="me-2" />
               Add Product
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">
@@ -265,9 +265,9 @@ const ProductList = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Product Deletion</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 ></button>
@@ -276,17 +276,17 @@ const ProductList = () => {
                 <p>Are you sure you want to delete this product? This action cannot be undone.</p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-info text-white" 
+                <button
+                  type="button"
+                  className="btn btn-info text-white"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={handleConfirmDelete}
                   disabled={loading}
                 >
@@ -305,9 +305,9 @@ const ProductList = () => {
             <div className="modal-content">
               <div className="modal-header" style={{ backgroundColor: '#6c63ff' }}>
                 <h5 className="modal-title text-white">Product Details</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   style={{ filter: 'invert(1)' }}
                   onClick={() => setViewModalVisible(false)}
                 ></button>
@@ -367,9 +367,9 @@ const ProductList = () => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setViewModalVisible(false)}
                 >
                   Close
@@ -379,7 +379,7 @@ const ProductList = () => {
           </div>
         </div>
       )}
-      
+
       <ToastContainer position="top-right" autoClose={3000} />
       <ReactTooltip id="tooltip" effect="solid" />
     </>

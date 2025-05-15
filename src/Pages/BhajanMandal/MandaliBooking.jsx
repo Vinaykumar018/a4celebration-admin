@@ -14,17 +14,17 @@ const BookingListBhajanMandal = () => {
   const [viewModalVisible, setViewModalVisible] = useState(false);
   const [rowToView, setRowToView] = useState(null);
   const [moreInfoExpanded, setMoreInfoExpanded] = useState(true);
-  
+
   const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
   const BASE_URL = `http://localhost:3000/api/`;
 
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/order/bhajan-mandali`, { 
+      const response = await axios.get(`http://localhost:3000/api/order/bhajan-mandali`, {
         headers: { Authorization: token },
       });
-      
+
       if (response.data && Array.isArray(response.data)) {
         const ordersWithAddresses = await fetchAddresses(response.data);
         setOrders(ordersWithAddresses);
@@ -61,10 +61,10 @@ const BookingListBhajanMandal = () => {
                 Authorization: token
               },
             });
-            
+
             const deliveryAddress = addressResponse.data?.DeliveryAddress || {};
-            return { 
-              ...order, 
+            return {
+              ...order,
               address: deliveryAddress,
               formattedAddress: formatAddress(deliveryAddress) || "N/A"
             };
@@ -264,9 +264,9 @@ const BookingListBhajanMandal = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Cancellation</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 ></button>
@@ -275,17 +275,17 @@ const BookingListBhajanMandal = () => {
                 <p>Are you sure you want to cancel this booking? This action cannot be undone.</p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={loading}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success text-white" 
+                <button
+                  type="button"
+                  className="btn btn-success text-white"
                   onClick={handleConfirmCancel}
                   disabled={loading}
                 >
@@ -304,9 +304,9 @@ const BookingListBhajanMandal = () => {
             <div className="modal-content">
               <div className="modal-header" style={{ backgroundColor: '#6c63ff' }}>
                 <h5 className="modal-title text-white">Bhajan Mandal Booking Details</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   style={{ filter: 'invert(1)' }}
                   onClick={() => setViewModalVisible(false)}
                 ></button>
@@ -318,22 +318,22 @@ const BookingListBhajanMandal = () => {
                     <div className='col-12'>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaIdCard className="text-primary me-2" />
-                        <strong>Booking ID:</strong> 
+                        <strong>Booking ID:</strong>
                         <span className="ms-2">{rowToView.bookingId}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaInfoCircle className="text-success me-2" />
-                        <strong>Mandali Name:</strong> 
+                        <strong>Mandali Name:</strong>
                         <span className="ms-2">{rowToView.bookingDetails?.mandaliName || 'N/A'}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaUser className="text-info me-2" />
-                        <strong>User Name:</strong> 
+                        <strong>User Name:</strong>
                         <span className="ms-2">{rowToView.userDetails?.username || 'N/A'}</span>
                       </div>
                       <div className="d-flex align-items-center mb-2 me-3">
                         <FaPhone className="text-warning me-2" />
-                        <strong>Contact:</strong> 
+                        <strong>Contact:</strong>
                         <span className="ms-2">{rowToView.userDetails?.contactNumber || 'N/A'}</span>
                       </div>
                     </div>
@@ -342,19 +342,19 @@ const BookingListBhajanMandal = () => {
 
                 {/* More Information Section */}
                 <div className="p-4" style={{ backgroundColor: '#f8f6ff' }}>
-                  <div 
-                    className="common-flex align-items-center cursor-pointer mb-3" 
+                  <div
+                    className="common-flex align-items-center cursor-pointer mb-3"
                     onClick={() => setMoreInfoExpanded(!moreInfoExpanded)}
                     style={{ cursor: 'pointer' }}
                   >
                     <FaInfoCircle className="text-primary me-2" />
                     <h6 className="mb-0">More Information</h6>
-                    {moreInfoExpanded ? 
-                      <FaChevronUp className="ms-2" /> : 
+                    {moreInfoExpanded ?
+                      <FaChevronUp className="ms-2" /> :
                       <FaChevronDown className="ms-2" />
                     }
                   </div>
-                  
+
                   {moreInfoExpanded && (
                     <div className="row">
                       <div className="col-md-6 mb-3">
@@ -419,9 +419,9 @@ const BookingListBhajanMandal = () => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setViewModalVisible(false)}
                 >
                   Close
@@ -431,7 +431,7 @@ const BookingListBhajanMandal = () => {
           </div>
         </div>
       )}
-      
+
       <ToastContainer position="top-right" autoClose={3000} />
       <ReactTooltip id="tooltip" effect="solid" />
     </>

@@ -25,7 +25,7 @@ const OrderList = () => {
             const response = await axios.get(`${BASE_URL}/e-store/all-order`, {
                 headers: { Authorization: token },
             });
-            
+
             // Check if response.data exists and has orderData
             if (response.data && response.data.orderData) {
                 const ordersWithAddresses = await fetchAddresses(response.data.orderData);
@@ -57,20 +57,20 @@ const OrderList = () => {
                         const addressResponse = await axios.get(`${BASE_URL}/order/delivery-address/${order.orderId}`, {
                             headers: { Authorization: token },
                         });
-                        
+
                         // Check if address response has data
                         const deliveryAddress = addressResponse.data?.DeliveryAddress || {};
-                        return { 
-                            ...order, 
+                        return {
+                            ...order,
                             Address: deliveryAddress,
                             formattedAddress: formatAddress(deliveryAddress) || "N/A"
                         };
                     } catch (error) {
                         console.error(`Error fetching address for order ${order.orderId}:`, error);
-                        return { 
-                            ...order, 
-                            Address: {}, 
-                            formattedAddress: "N/A" 
+                        return {
+                            ...order,
+                            Address: {},
+                            formattedAddress: "N/A"
                         };
                     }
                 })
@@ -78,10 +78,10 @@ const OrderList = () => {
             return updatedOrders;
         } catch (error) {
             console.error('Error in fetchAddresses:', error);
-            return ordersData.map(order => ({ 
-                ...order, 
-                Address: {}, 
-                formattedAddress: "N/A" 
+            return ordersData.map(order => ({
+                ...order,
+                Address: {},
+                formattedAddress: "N/A"
             }));
         }
     };
@@ -146,8 +146,8 @@ const OrderList = () => {
             name: 'Order ID',
             cell: (row) => (
                 <div className="d-flex align-items-center">
-                    <button 
-                        className="btn btn-sm me-2" 
+                    <button
+                        className="btn btn-sm me-2"
                         onClick={() => toggleRow(row.orderId)}
                         style={{ background: 'transparent', border: 'none' }}
                     >
@@ -287,7 +287,7 @@ const OrderList = () => {
                     />
                 </div>
             </div>
-            
+
             <ToastContainer position="top-right" autoClose={3000} />
             <ReactTooltip id="tooltip" effect="solid" />
         </>

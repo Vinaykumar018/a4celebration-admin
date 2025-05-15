@@ -26,12 +26,12 @@ const GetCategories = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
-  
+
   const confirmDelete = (category) => {
     setCategoryToDelete(category);
     setShowModal(true);
   };
-  
+
   const handleConfirmDelete = async () => {
     try {
       await dispatch(removeCategory(categoryToDelete._id)).unwrap();
@@ -72,7 +72,7 @@ const GetCategories = () => {
   const handleChildCategorySuccess = () => {
     dispatch(fetchCategories());
   };
-console.log(categories)
+  console.log(categories)
   const columns = [
     {
       name: 'Image',
@@ -81,11 +81,11 @@ console.log(categories)
         <img
           src={`http://localhost:3000/${row.category_image.replace(/\\/g, '/')}`}
           alt={row.category_name}
-          style={{ 
-            width: '3rem', 
-            height: '3rem', 
-            objectFit: 'cover', 
-            borderRadius: '0.25rem' 
+          style={{
+            width: '3rem',
+            height: '3rem',
+            objectFit: 'cover',
+            borderRadius: '0.25rem'
           }}
         />
       ),
@@ -122,7 +122,7 @@ console.log(categories)
               ];
               const color = colors[index % colors.length];
               return (
-                <span 
+                <span
                   key={id}
                   className={`${color} text-white text-[0.6rem] px-1 py-0.5 rounded-full inline-block leading-none`}
                 >
@@ -153,7 +153,7 @@ console.log(categories)
       minWidth: '15rem',
       wrap: false,
     }
-,    
+    ,
     {
       name: 'Slug URL',
       selector: row => row.slug_url || '-',

@@ -7,7 +7,7 @@ import { updateUser } from '../../Services/userApiService';
 const UserEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -109,9 +109,9 @@ const UserEdit = () => {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-  
+
         const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
-  
+
         const response = await fetch(`http://localhost:3000/api/user/${id}`, {
           method: 'GET',
           headers: {
@@ -119,7 +119,7 @@ const UserEdit = () => {
             'Content-Type': 'application/json',
           },
         });
-  
+
         const responseReturn = await response.json();
         const userData = responseReturn.data;
         if (response.ok) {
@@ -143,7 +143,7 @@ const UserEdit = () => {
             aadhar_no: userData.aadhar_no || '',
             status: userData.status || 'active',
           });
-  
+
           if (userData.image) {
             setImagePreview(userData.image);
           }
@@ -157,21 +157,21 @@ const UserEdit = () => {
         setLoading(false);
       }
     };
-  
+
     if (id) {
       fetchUserData();
     }
   }, [id]);
-  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Prevent autocomplete for sensitive fields
     if (name === 'password' || name === 'aadhar_no') {
       e.target.autocomplete = 'new-password';
     }
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -185,7 +185,7 @@ const UserEdit = () => {
         toast.error('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Image size should be less than 2MB');
@@ -201,11 +201,11 @@ const UserEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setLoading(true);
     const formDataToSend = new FormData();
     for (let key in formData) {
@@ -241,9 +241,9 @@ const UserEdit = () => {
         <Link to="/user" className='btn btn-info text-white'>User List</Link>
       </div>
       <div className="card-body">
-        <form 
-          className="grid grid-cols-12 gap-3 needs-validation" 
-          noValidate 
+        <form
+          className="grid grid-cols-12 gap-3 needs-validation"
+          noValidate
           onSubmit={handleSubmit}
           autoComplete="off"
         >

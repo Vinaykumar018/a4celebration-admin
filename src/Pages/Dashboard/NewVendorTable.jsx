@@ -66,37 +66,37 @@ const NewVendorTable = () => {
                   <tr key={pandit._id}>
                     <td className="ps-4">{index + 1}</td>
                     <td>
-                    <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center">
                         <div className="me-2">
-                            <img 
-                            src={pandit.image ? IMGURL + pandit.image : defaultImage} 
-                            alt={pandit.username} 
-                           
-                            style={{height:"50px",width:"50px",borderRadius:"50%"}}
+                          <img
+                            src={pandit.image ? IMGURL + pandit.image : defaultImage}
+                            alt={pandit.username}
+
+                            style={{ height: "50px", width: "50px", borderRadius: "50%" }}
                             onError={(e) => {
-                            e.target.src = defaultImage;
+                              e.target.src = defaultImage;
                             }}
-                        />
+                          />
                         </div>
                         <div>
-                          <span className="d-block fw-medium"><Link 
-                                        to={`/pandit/${pandit._id}`} 
-                                        className="text-primary text-decoration-none fw-medium"
-                                    >
-                                        {pandit.username}
-                                    </Link>
-                        </span>
+                          <span className="d-block fw-medium"><Link
+                            to={`/pandit/${pandit._id}`}
+                            className="text-primary text-decoration-none fw-medium"
+                          >
+                            {pandit.username}
+                          </Link>
+                          </span>
                         </div>
                       </div>
-                      
+
                     </td>
-                    
-                    <td className="text-truncate" style={{maxWidth: '200px'}}>
+
+                    <td className="text-truncate" style={{ maxWidth: '200px' }}>
                       {pandit.email || 'N/A'}
                     </td>
                     <td>{pandit.mobile || 'N/A'}</td>
                     <td>{pandit.city || 'N/A'}</td>
-                
+
                   </tr>
                 ))
               ) : (

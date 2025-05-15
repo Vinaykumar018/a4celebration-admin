@@ -110,7 +110,7 @@ const PreviewMandal = () => {
   return (
     <div className="container-fluid">
       <ToastContainer />
-      
+
       {/* Main Card */}
       <div className="card">
         <div className="card-header">
@@ -194,10 +194,10 @@ const PreviewMandal = () => {
                       Updated: {new Date(bhajanData.updated_at).toLocaleString()}
                     </small>
                   </p>
-                  <a 
-                    href={`/${bhajanData.slug_url}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href={`/${bhajanData.slug_url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn btn-sm btn-outline-primary"
                   >
                     View Public Page

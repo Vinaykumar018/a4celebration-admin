@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getPanditByID } from '../../Services/panditApiService';
 import {
   FaUser,
@@ -27,7 +27,7 @@ import {
 import GetTable from '../../Component/GetTable';
 
 const PanditProfileData = () => {
-  const IMGURL = 'http://localhost:3000/uploads/panditImages/'; 
+  const IMGURL = 'http://localhost:3000/uploads/panditImages/';
   const { id } = useParams();
   const [panditProfileData, setPanditProfileData] = useState(null);
   const [activeTab, setActiveTab] = useState('personal');
@@ -113,7 +113,7 @@ const PanditProfileData = () => {
         <div className="card-header pb-2 pt-4 card-border">
           <div className="common-flex justify-between items-center">
             <h4 className="text-left text-primary mb-0">Pandit Profile</h4>
-            <Link to={"/pandit/update-pandit/"+id} className='btn btn-info'>Edit</Link>
+            <Link to={"/pandit/update-pandit/" + id} className='btn btn-info'>Edit</Link>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ const PanditProfileData = () => {
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">
                   <img
-                    src={IMGURL+panditProfileData?.image || "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/813px-Unknown_person.jpg"}
+                    src={IMGURL + panditProfileData?.image || "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/813px-Unknown_person.jpg"}
                     alt="Pandit Profile"
                     className="rounded-full border object-cover mx-auto"
                     style={{ height: '100px', width: '100px' }}
@@ -135,7 +135,7 @@ const PanditProfileData = () => {
                 <h5 className="font-semibold text-lg mb-2">
                   {panditProfileData?.username}
                 </h5>
-                
+
                 <div className="space-y-2">
                   <p className="flex items-center justify-center text-gray-700">
                     <FaPhone className="mr-2 text-gray-500" />
@@ -160,11 +160,10 @@ const PanditProfileData = () => {
                   <div className="common-flex flex-col items-center">
                     <span className="font-medium mb-1">Status</span>
                     <span
-                      className={`px-2 py-1 badge rounded-pill cursor-pointer text-sm font-medium ${
-                        panditProfileData?.status === 'active'
-                          ? 'bg-success text-white'
-                          : 'bg-danger text-white'
-                      }`}
+                      className={`px-2 py-1 badge rounded-pill cursor-pointer text-sm font-medium ${panditProfileData?.status === 'active'
+                        ? 'bg-success text-white'
+                        : 'bg-danger text-white'
+                        }`}
                     >
                       {panditProfileData?.status}
                     </span>
@@ -172,11 +171,10 @@ const PanditProfileData = () => {
                   <div className="common-flex flex-col items-center">
                     <span className="font-medium mb-1">Approved</span>
                     <span
-                      className={`px-2 py-1 badge rounded-pill cursor-pointer text-sm font-medium ${
-                        panditProfileData?.approved
-                          ? 'bg-success text-white'
-                          : 'bg-danger text-white'
-                      }`}
+                      className={`px-2 py-1 badge rounded-pill cursor-pointer text-sm font-medium ${panditProfileData?.approved
+                        ? 'bg-success text-white'
+                        : 'bg-danger text-white'
+                        }`}
                     >
                       {panditProfileData?.approved ? 'Yes' : 'No'}
                     </span>
@@ -190,41 +188,37 @@ const PanditProfileData = () => {
               {/* Tab Navigation */}
               <div className="flex border-b border-gray-200 mb-4">
                 <button
-                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${
-                    activeTab === 'personal'
-                      ? 'text-blue-600 border-b-2 border-blue-600'
-                      : 'text-gray-500 hover:text-blue-500'
-                  }`}
+                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${activeTab === 'personal'
+                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    : 'text-gray-500 hover:text-blue-500'
+                    }`}
                   onClick={() => setActiveTab('personal')}
                 >
                   <FaUser className="inline mr-1" /> Personal
                 </button>
                 <button
-                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${
-                    activeTab === 'address'
-                      ? 'text-blue-600 border-b-2 border-blue-600'
-                      : 'text-gray-500 hover:text-blue-500'
-                  }`}
+                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${activeTab === 'address'
+                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    : 'text-gray-500 hover:text-blue-500'
+                    }`}
                   onClick={() => setActiveTab('address')}
                 >
                   <FaMapMarkerAlt className="inline mr-1" /> Address
                 </button>
                 <button
-                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${
-                    activeTab === 'professional'
-                      ? 'text-blue-600 border-b-2 border-blue-600'
-                      : 'text-gray-500 hover:text-blue-500'
-                  }`}
+                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${activeTab === 'professional'
+                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    : 'text-gray-500 hover:text-blue-500'
+                    }`}
                   onClick={() => setActiveTab('professional')}
                 >
                   <FaBriefcase className="inline mr-1" /> Professional
                 </button>
                 <button
-                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${
-                    activeTab === 'bank'
-                      ? 'text-blue-600 border-b-2 border-blue-600'
-                      : 'text-gray-500 hover:text-blue-500'
-                  }`}
+                  className={`py-2 px-4 font-medium text-sm focus:outline-none ${activeTab === 'bank'
+                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    : 'text-gray-500 hover:text-blue-500'
+                    }`}
                   onClick={() => setActiveTab('bank')}
                 >
                   <FaMoneyBillAlt className="inline mr-1" /> Bank

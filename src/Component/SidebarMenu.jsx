@@ -78,16 +78,12 @@ function SidebarMenu({ collapsed }) {
           subItems: [
             { title: 'All Decorations', path: '/get/get-decoration' },
             { title: 'Add Decorations', path: "/create/create-decoration" },
+            { title: 'All Decoration Orders', path: "/decoration/orders" }
             
           ]
         },
 
-        {
-          id: 'Orders',
-          title: 'Orders',
-          icon: faHandsPraying,
-          path:"/orders"
-        }
+       
         // {
         //   id: 'bhavya-ayojan',
         //   title: 'Bhavya Ayojan',

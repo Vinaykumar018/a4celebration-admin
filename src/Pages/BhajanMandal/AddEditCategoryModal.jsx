@@ -48,10 +48,10 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess, apiSer
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const formData = new FormData(e.target);
-      
+
       if (categoryToEdit) {
         const result = await apiService.update(categoryToEdit._id, formData);
         if (result.status === 1) {
@@ -95,50 +95,50 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess, apiSer
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="mb-3">
                 <label className="form-label">Category Name</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="category" 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="category"
                   defaultValue={categoryToEdit?.category || ''}
                   onChange={handleNameChange}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Description</label>
-                <textarea 
-                  className="form-control" 
-                  name="short_discription" 
+                <textarea
+                  className="form-control"
+                  name="short_discription"
                   defaultValue={categoryToEdit?.short_discription || ''}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Slug URL</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="slug_url" 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="slug_url"
                   defaultValue={categoryToEdit?.slug_url || ''}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Image</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  name="bhajan_image" 
+                <input
+                  type="file"
+                  className="form-control"
+                  name="bhajan_image"
                   accept="image/*"
                   onChange={handleImageChange}
                 />
                 {imagePreview && (
                   <div className="mt-2">
                     <small>Preview:</small>
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
-                      width="100" 
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      width="100"
                       className="d-block mt-1 img-thumbnail"
                     />
                   </div>

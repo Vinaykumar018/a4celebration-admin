@@ -8,7 +8,7 @@ const IMGURL = "http://localhost:3000/uploads/panditImages/";
 const UpdatePandit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -66,23 +66,23 @@ const UpdatePandit = () => {
             Authorization: token,
           },
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch pandit data');
         }
-        
+
         const responseResult = await response.json();
         const data = responseResult.data;
-        
+
         if (!data) {
           throw new Error('No pandit data found');
         }
-        
+
         setFormData(data);
         if (data.image) {
           // Check if image is already a full URL or just a path
-          const previewUrl = data.image.startsWith('http') ? 
-            data.image : 
+          const previewUrl = data.image.startsWith('http') ?
+            data.image :
             `${IMGURL}${data.image}`;
           setImagePreview(previewUrl);
         }
@@ -203,12 +203,12 @@ const UpdatePandit = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Prevent autocomplete for sensitive fields
     if (name === 'password' || name === 'bank_ac_no') {
       e.target.autocomplete = 'new-password';
     }
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -222,7 +222,7 @@ const UpdatePandit = () => {
         toast.error('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Image size should be less than 2MB');
@@ -243,31 +243,31 @@ const UpdatePandit = () => {
         toast.error('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Image size should be less than 2MB');
         return;
       }
-      
+
       setFormData(prev => ({ ...prev, aadhar_image: file }));
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setLoading(true);
     const formDataToSend = new FormData();
     for (let key in formData) {
       if (formData[key] !== null && formData[key] !== undefined) {
         // Skip empty fields except for required ones
-        if (formData[key] !== '' || 
-            ['username', 'email', 'mobile', 'password'].includes(key)) {
+        if (formData[key] !== '' ||
+          ['username', 'email', 'mobile', 'password'].includes(key)) {
           formDataToSend.append(key, formData[key]);
         }
       }
@@ -326,9 +326,9 @@ const UpdatePandit = () => {
         <Link to="/pandit" className='btn btn-info text-white'>Pandit List</Link>
       </div>
       <div className="card-body">
-        <form 
-          className="grid grid-cols-12 gap-3 needs-validation" 
-          noValidate 
+        <form
+          className="grid grid-cols-12 gap-3 needs-validation"
+          noValidate
           onSubmit={handleFormSubmit}
           autoComplete="off"
         >

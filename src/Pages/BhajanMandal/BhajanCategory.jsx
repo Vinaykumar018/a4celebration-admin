@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { 
-  fetchCategories, 
+import {
+  fetchCategories,
   deleteBhajanCategory,
   UpdateBhajanCategoryStatus,
   createCategory,
@@ -60,15 +60,15 @@ const BhajanCategory = () => {
   const handleConfirmStatusChange = async () => {
     try {
       const response = await UpdateBhajanCategoryStatus(
-        statusToUpdate.id, 
+        statusToUpdate.id,
         statusToUpdate.newStatus ? 'active' : 'inactive'
       );
-      
+
       if (response.status === 1) {
         toast.success("Status updated successfully!");
-        setCategoryData(categoryData.map(item => 
-          item._id === statusToUpdate.id 
-            ? { ...item, status: statusToUpdate.newStatus } 
+        setCategoryData(categoryData.map(item =>
+          item._id === statusToUpdate.id
+            ? { ...item, status: statusToUpdate.newStatus }
             : item
         ));
       } else {
@@ -94,10 +94,10 @@ const BhajanCategory = () => {
       name: 'Image',
       cell: (row) => (
         row.bhajan_image ? (
-          <img 
-            src={`http://localhost:3000/${row.bhajan_image}`} 
-            alt={row.category} 
-            width="50" 
+          <img
+            src={`http://localhost:3000/${row.bhajan_image}`}
+            alt={row.category}
+            width="50"
             height="50"
             style={{ borderRadius: '5px' }}
           />
@@ -121,9 +121,8 @@ const BhajanCategory = () => {
       cell: row => (
         <span
           onClick={() => handleToggleStatus(row)}
-          className={`badge rounded-pill px-3 py-1 cursor-pointer ${
-            row.status ? 'bg-success text-white' : 'bg-danger text-white'
-          }`}
+          className={`badge rounded-pill px-3 py-1 cursor-pointer ${row.status ? 'bg-success text-white' : 'bg-danger text-white'
+            }`}
           style={{ cursor: 'pointer' }}
         >
           {row.status ? 'Active' : 'Inactive'}
@@ -222,7 +221,7 @@ const BhajanCategory = () => {
             <button className='btn btn-info' onClick={navigateToAddCategory}>
               <FaPlus className="me-2" />
               Add Category
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">
@@ -276,16 +275,16 @@ const BhajanCategory = () => {
                 </p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setShowStatusModal(false)}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success text-white" 
+                <button
+                  type="button"
+                  className="btn btn-success text-white"
                   onClick={handleConfirmStatusChange}
                 >
                   Confirm

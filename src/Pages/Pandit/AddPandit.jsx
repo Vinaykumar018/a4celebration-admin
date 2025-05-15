@@ -159,12 +159,12 @@ const AddPandit = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Prevent autocomplete for sensitive fields
     if (name === 'password' || name === 'bank_ac_no') {
       e.target.autocomplete = 'new-password';
     }
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -178,7 +178,7 @@ const AddPandit = () => {
         toast.error('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Image size should be less than 2MB');
@@ -199,13 +199,13 @@ const AddPandit = () => {
         toast.error('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Image size should be less than 2MB');
         return;
       }
-      
+
       setFormData(prev => ({ ...prev, aadhar_image: file }));
     }
   };
@@ -217,8 +217,8 @@ const AddPandit = () => {
     for (let key in formData) {
       if (formData[key] !== null && formData[key] !== undefined) {
         // Skip empty fields except for required ones
-        if (formData[key] !== '' || 
-            ['username', 'email', 'mobile', 'password'].includes(key)) {
+        if (formData[key] !== '' ||
+          ['username', 'email', 'mobile', 'password'].includes(key)) {
           formDataToSend.append(key, formData[key]);
         }
       }
@@ -256,9 +256,9 @@ const AddPandit = () => {
         <Link to="/pandit" className='btn btn-info text-white'>Pandit List</Link>
       </div>
       <div className="card-body">
-        <form 
-          className="grid grid-cols-12 gap-3 needs-validation" 
-          noValidate 
+        <form
+          className="grid grid-cols-12 gap-3 needs-validation"
+          noValidate
           onSubmit={handleFormSubmit}
           autoComplete="off" // Disable browser autofill for the entire form
         >

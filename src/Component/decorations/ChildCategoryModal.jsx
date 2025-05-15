@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const ChildCategoryModal = ({ 
-  mode, 
-  row, 
-  onClose, 
-  onSuccess 
+const ChildCategoryModal = ({
+  mode,
+  row,
+  onClose,
+  onSuccess
 }) => {
   const [childCategoryName, setChildCategoryName] = useState('');
   const [childCategoryImage, setChildCategoryImage] = useState(null);
@@ -72,7 +72,7 @@ const ChildCategoryModal = ({
   };
 
   const handleDeleteChildCategories = async () => {
-    console.log( row)
+    console.log(row)
     if (selectedChildIds.length === 0) {
       setError('Please select at least one child category');
       return;
@@ -112,9 +112,9 @@ const ChildCategoryModal = ({
   };
 
   const toggleChildSelection = (childId) => {
-    setSelectedChildIds(prev => 
-      prev.includes(childId) 
-        ? prev.filter(id => id !== childId) 
+    setSelectedChildIds(prev =>
+      prev.includes(childId)
+        ? prev.filter(id => id !== childId)
         : [...prev, childId]
     );
   };
@@ -135,8 +135,8 @@ const ChildCategoryModal = ({
           <h2 className="text-lg font-semibold">
             {mode === 'add' ? 'Add Child Category' : 'Remove Child Categories'}
           </h2>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
             disabled={isLoading}
           >
@@ -179,9 +179,9 @@ const ChildCategoryModal = ({
                 />
                 {previewImage && (
                   <div className="mt-2">
-                    <img 
-                      src={previewImage} 
-                      alt="Preview" 
+                    <img
+                      src={previewImage}
+                      alt="Preview"
                       className="max-h-32 object-contain"
                     />
                   </div>
@@ -196,8 +196,8 @@ const ChildCategoryModal = ({
               <div className="max-h-60 overflow-y-auto border rounded">
                 {row.child_category && Object.entries(row.child_category).length > 0 ? (
                   Object.entries(row.child_category).map(([id, child]) => (
-                    <div 
-                      key={id} 
+                    <div
+                      key={id}
                       className="p-2 border-b hover:bg-gray-50 flex items-center text-sm"
                     >
                       <input
@@ -242,11 +242,10 @@ const ChildCategoryModal = ({
             </button>
             <button
               type="submit"
-              className={`px-4 py-2 text-white rounded text-sm ${
-                mode === 'add' 
-                  ? 'bg-blue-600 hover:bg-blue-700' 
-                  : 'bg-red-600 hover:bg-red-700'
-              }`}
+              className={`px-4 py-2 text-white rounded text-sm ${mode === 'add'
+                ? 'bg-blue-600 hover:bg-blue-700'
+                : 'bg-red-600 hover:bg-red-700'
+                }`}
               disabled={isLoading}
             >
               {isLoading ? 'Processing...' : mode === 'add' ? 'Add' : 'Delete'}

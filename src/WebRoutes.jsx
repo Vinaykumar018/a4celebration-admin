@@ -42,7 +42,7 @@ import UpdateCategories from './Pages/Categories/update-categories';
 import CreateDecorations from './Pages/decorations/create-decorations';
 import GetDecorations from './Pages/decorations/get-decorations';
 import UpdateDecorations from './Pages/decorations/update-decorations';
-import Orders from './Pages/orders/Orders';
+import Orders from './Pages/decoration-orders/Orders';
 
 function WebRoutes() {
   return (
@@ -65,7 +65,7 @@ function WebRoutes() {
 
 
 
-       <Route path="/orders" element={<Orders/>}/>
+       <Route path="/decoration/orders" element={<Orders/>}/>
 
 
 

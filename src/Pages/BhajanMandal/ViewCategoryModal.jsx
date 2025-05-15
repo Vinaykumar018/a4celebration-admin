@@ -33,10 +33,10 @@ const ViewCategoryModal = ({ show, onClose, category, imageField = 'bhajan_image
             {category[imageField] && (
               <div className="mb-3">
                 <h6>Image</h6>
-                <img 
-                  src={`http://localhost:3000${category[imageField]}`} 
-                  alt={category.category} 
-                  width="150" 
+                <img
+                  src={`http://localhost:3000${category[imageField]}`}
+                  alt={category.category}
+                  width="150"
                   className="img-thumbnail"
                 />
               </div>

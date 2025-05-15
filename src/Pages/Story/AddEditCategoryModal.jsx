@@ -25,7 +25,7 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess }) => {
         language: categoryToEdit.language || 'english',
         image: null
       });
-      
+
       if (categoryToEdit.image) {
         const imagePath = categoryToEdit.image.startsWith("http")
           ? categoryToEdit.image
@@ -77,7 +77,7 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const formDataObj = new FormData();
       formDataObj.append('title', formData.title);
@@ -85,24 +85,24 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess }) => {
       formDataObj.append('metaKeywords', formData.metaKeywords);
       formDataObj.append('metaDescription', formData.metaDescription);
       formDataObj.append('language', formData.language);
-      
+
       // Only append image if it's a File object
       if (formData.image instanceof File) {
         formDataObj.append('image', formData.image);
       }
-  
+
       // For debugging - log FormData entries
       for (let [key, value] of formDataObj.entries()) {
         console.log(key, value);
       }
-  
+
       let result;
       if (categoryToEdit) {
         result = await updateStoryCategory(categoryToEdit._id, formDataObj);
       } else {
         result = await createStoryCategory(formDataObj);
       }
-  
+
       if (result.status === 1) {
         toast.success(`Category ${categoryToEdit ? 'updated' : 'created'} successfully!`);
         onSuccess();
@@ -148,63 +148,63 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess }) => {
               </div>
               <div className="mb-3">
                 <label className="form-label">Title</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="title" 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Meta Title</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="metaTitle" 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="metaTitle"
                   value={formData.metaTitle}
                   onChange={handleInputChange}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Meta Keywords</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="metaKeywords" 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="metaKeywords"
                   value={formData.metaKeywords}
                   onChange={handleInputChange}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Meta Description</label>
-                <textarea 
-                  className="form-control" 
-                  name="metaDescription" 
+                <textarea
+                  className="form-control"
+                  name="metaDescription"
                   value={formData.metaDescription}
                   onChange={handleInputChange}
-                  required 
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Image</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  name="image" 
+                <input
+                  type="file"
+                  className="form-control"
+                  name="image"
                   accept="image/*"
                   onChange={handleImageChange}
                 />
                 {imagePreview && (
                   <div className="mt-2">
                     <small>Preview:</small>
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
-                      width="100" 
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      width="100"
                       className="d-block mt-1 img-thumbnail"
                     />
                   </div>

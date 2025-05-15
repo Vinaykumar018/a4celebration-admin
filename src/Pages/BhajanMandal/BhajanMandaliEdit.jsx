@@ -38,18 +38,18 @@ const BhajanMandaliEdit = () => {
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Validate phone number if the field is owner_phone
     if (name === "owner_phone") {
       if (!/^\d{10}$/.test(value) && value !== "") {
-        setErrors({...errors, owner_phone: "Phone number must be 10 digits"});
+        setErrors({ ...errors, owner_phone: "Phone number must be 10 digits" });
       } else {
-        const newErrors = {...errors};
+        const newErrors = { ...errors };
         delete newErrors.owner_phone;
         setErrors(newErrors);
       }
     }
-    
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -80,7 +80,7 @@ const BhajanMandaliEdit = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate form before submission
     if (Object.keys(errors).length > 0) {
       toast.error("Please fix the errors in the form");
@@ -128,13 +128,13 @@ const BhajanMandaliEdit = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      
+
       // Load categories
       const categoriesResult = await fetchCategories();
       if (categoriesResult.status === 1) {
         setCategoryData(categoriesResult.data);
       }
-      
+
       // Load bhajan mandal data
       const bhajanResult = await fetchBhajanMandalById(id);
       if (bhajanResult.status === 1) {
@@ -159,7 +159,7 @@ const BhajanMandaliEdit = () => {
           country: bhajanMandal.mandali_address?.country,
           pin_code: bhajanMandal.mandali_address?.pin_code,
           area: bhajanMandal.mandali_address?.area,
-        });        
+        });
         if (bhajanMandal.bhajan_image) {
           setImagePreview(bhajanMandal.bhajan_image);
         }
@@ -174,7 +174,7 @@ const BhajanMandaliEdit = () => {
   useEffect(() => {
     loadData();
   }, [id]);
-console.log(formData);
+  console.log(formData);
   return (
     <div className="card">
       <div className="card-header">
@@ -186,40 +186,40 @@ console.log(formData);
           {/* Owner Information */}
           <div className="col-span-6">
             <label className="form-label">Owner Name</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="owner_name" 
-              value={formData.owner_name} 
-              onChange={handleInputChange} 
-              placeholder="Enter owner name" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="owner_name"
+              value={formData.owner_name}
+              onChange={handleInputChange}
+              placeholder="Enter owner name"
+              required
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Owner Email</label>
-            <input 
-              type="email" 
-              className="form-control" 
-              name="owner_email" 
-              value={formData.owner_email} 
-              onChange={handleInputChange} 
-              placeholder="Enter owner email" 
-              required 
+            <input
+              type="email"
+              className="form-control"
+              name="owner_email"
+              value={formData.owner_email}
+              onChange={handleInputChange}
+              placeholder="Enter owner email"
+              required
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Owner Phone</label>
-            <input 
-              type="text" 
-              className={`form-control ${errors.owner_phone ? 'is-invalid' : ''}`} 
-              name="owner_phone" 
-              value={formData.owner_phone} 
-              onChange={handleInputChange} 
-              placeholder="Enter owner phone" 
-              required 
+            <input
+              type="text"
+              className={`form-control ${errors.owner_phone ? 'is-invalid' : ''}`}
+              name="owner_phone"
+              value={formData.owner_phone}
+              onChange={handleInputChange}
+              placeholder="Enter owner phone"
+              required
               maxLength="10"
             />
             {errors.owner_phone && <div className="invalid-feedback">{errors.owner_phone}</div>}
@@ -228,36 +228,36 @@ console.log(formData);
           {/* Mandali Info */}
           <div className="col-span-6">
             <label className="form-label">Mandali Name</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="bhajan_name" 
-              value={formData.bhajan_name} 
-              onChange={handleInputChange} 
-              placeholder="Enter mandali name" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="bhajan_name"
+              value={formData.bhajan_name}
+              onChange={handleInputChange}
+              placeholder="Enter mandali name"
+              required
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Mandali Slug</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="slug_url" 
-              value={formData.slug_url} 
-              readOnly 
-              placeholder="Auto-generated slug" 
+            <input
+              type="text"
+              className="form-control"
+              name="slug_url"
+              value={formData.slug_url}
+              readOnly
+              placeholder="Auto-generated slug"
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Category</label>
-            <select 
-              className="form-select" 
-              name="bhajan_category" 
-              value={formData.bhajan_category} 
-              onChange={handleInputChange} 
+            <select
+              className="form-select"
+              name="bhajan_category"
+              value={formData.bhajan_category}
+              onChange={handleInputChange}
               required
             >
               <option value="" disabled>Select Category</option>
@@ -269,181 +269,181 @@ console.log(formData);
 
           <div className="col-span-6">
             <label className="form-label">Price</label>
-            <input 
-              type="number" 
-              className="form-control" 
-              name="bhajan_price" 
-              value={formData.bhajan_price} 
-              onChange={handleInputChange} 
-              placeholder="Enter price" 
-              required 
+            <input
+              type="number"
+              className="form-control"
+              name="bhajan_price"
+              value={formData.bhajan_price}
+              onChange={handleInputChange}
+              placeholder="Enter price"
+              required
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Total Members</label>
-            <input 
-              type="number" 
-              className="form-control" 
-              name="bhajan_member" 
-              value={formData.bhajan_member} 
-              onChange={handleInputChange} 
-              placeholder="Enter total members" 
-              required 
+            <input
+              type="number"
+              className="form-control"
+              name="bhajan_member"
+              value={formData.bhajan_member}
+              onChange={handleInputChange}
+              placeholder="Enter total members"
+              required
             />
           </div>
 
           <div className="col-span-6">
             <label className="form-label">Experience Year</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="exp_year" 
-              value={formData.exp_year} 
-              onChange={handleInputChange} 
-              placeholder="Enter experience year" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="exp_year"
+              value={formData.exp_year}
+              onChange={handleInputChange}
+              placeholder="Enter experience year"
+              required
             />
           </div>
 
           {/* Address Info */}
           <div className="col-span-12">
             <label className="form-label">Address</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="address" 
-              value={formData.address} 
-              onChange={handleInputChange} 
-              placeholder="Enter address" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              placeholder="Enter address"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">City</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="city" 
-              value={formData.city} 
-              onChange={handleInputChange} 
-              placeholder="Enter city" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              placeholder="Enter city"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">State</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="state" 
-              value={formData.state} 
-              onChange={handleInputChange} 
-              placeholder="Enter state" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              placeholder="Enter state"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">Country</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="country" 
-              value={formData.country} 
-              onChange={handleInputChange} 
-              placeholder="Enter country" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="country"
+              value={formData.country}
+              onChange={handleInputChange}
+              placeholder="Enter country"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">Pin Code</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="pin_code" 
-              value={formData.pin_code} 
-              onChange={handleInputChange} 
-              placeholder="Enter pin code" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="pin_code"
+              value={formData.pin_code}
+              onChange={handleInputChange}
+              placeholder="Enter pin code"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">Area</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="area" 
-              value={formData.area} 
-              onChange={handleInputChange} 
-              placeholder="Enter area" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="area"
+              value={formData.area}
+              onChange={handleInputChange}
+              placeholder="Enter area"
+              required
             />
           </div>
 
           <div className="col-span-4">
             <label className="form-label">Location</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              name="location" 
-              value={formData.location} 
-              onChange={handleInputChange} 
-              placeholder="Enter location" 
-              required 
+            <input
+              type="text"
+              className="form-control"
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              placeholder="Enter location"
+              required
             />
           </div>
 
           {/* Image Upload */}
           <div className="col-span-6">
             <label className="form-label">Mandali Photo</label>
-            <input 
-              type="file" 
-              className="form-control" 
-              accept="image/*" 
-              onChange={handleFileChange} 
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={handleFileChange}
             />
             {imagePreview && (
-              <img src={IMGURL+imagePreview} alt="Preview" className="img-thumbnail mt-2" style={{ maxHeight: '100px' }} />
+              <img src={IMGURL + imagePreview} alt="Preview" className="img-thumbnail mt-2" style={{ maxHeight: '100px' }} />
             )}
           </div>
 
           {/* Descriptions */}
           <div className="col-span-12">
             <label className="form-label">Short Description</label>
-            <textarea 
-              className="form-control" 
-              rows="3" 
-              name="short_discription" 
-              value={formData.short_discription} 
-              onChange={handleInputChange} 
-              placeholder="Enter short description" 
-              required 
+            <textarea
+              className="form-control"
+              rows="3"
+              name="short_discription"
+              value={formData.short_discription}
+              onChange={handleInputChange}
+              placeholder="Enter short description"
+              required
             />
           </div>
 
           <div className="col-span-12">
             <label className="form-label">Long Description</label>
-            <textarea 
-              className="form-control" 
-              rows="5" 
-              name="long_discription" 
-              value={formData.long_discription} 
-              onChange={handleInputChange} 
-              placeholder="Enter long description" 
-              required 
+            <textarea
+              className="form-control"
+              rows="5"
+              name="long_discription"
+              value={formData.long_discription}
+              onChange={handleInputChange}
+              placeholder="Enter long description"
+              required
             />
           </div>
 
           {/* Submit */}
           <div className="col-span-12 flex justify-end">
-            <button 
-              type="submit" 
-              className="btn btn-success text-white" 
+            <button
+              type="submit"
+              className="btn btn-success text-white"
               disabled={loading || Object.keys(errors).length > 0}
             >
               {loading ? 'Updating...' : 'Update'}

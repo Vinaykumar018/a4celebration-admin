@@ -17,7 +17,7 @@ const UpdateCategories = () => {
     status: "1",
     slug_url: "",
     category_image: null,
-    
+
   });
 
   // Fetch category data when component mounts or id changes
@@ -52,7 +52,7 @@ const UpdateCategories = () => {
       setImagePreview(URL.createObjectURL(file));
     }
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,8 +78,8 @@ const UpdateCategories = () => {
 
 
 
-  
-  
+
+
   return (
     <div className="mt-4 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
@@ -151,24 +151,24 @@ const UpdateCategories = () => {
                 />
               </div>
               {formData.category_image ? (
-  <div className="mt-1 text-xs text-green-600">
-   
-    <img
-      src={imagePreview}
-      alt="New Preview"
-      className="mt-1 w-32 h-32 object-cover rounded border"
-    />
-  </div>
-) : currentCategory?.category_image && (
-  <div className="mt-1 text-xs text-gray-600">
-   
-    <img
-      src={`http://localhost:3000/${currentCategory.category_image}`}
-      alt="Current"
-      className="mt-1 w-32 h-32 object-cover rounded border"
-    />
-  </div>
-)}
+                <div className="mt-1 text-xs text-green-600">
+
+                  <img
+                    src={imagePreview}
+                    alt="New Preview"
+                    className="mt-1 w-32 h-32 object-cover rounded border"
+                  />
+                </div>
+              ) : currentCategory?.category_image && (
+                <div className="mt-1 text-xs text-gray-600">
+
+                  <img
+                    src={`http://localhost:3000/${currentCategory.category_image}`}
+                    alt="Current"
+                    className="mt-1 w-32 h-32 object-cover rounded border"
+                  />
+                </div>
+              )}
 
               <small className="text-xs text-gray-500">
                 Upload a new image to replace the existing one (JPEG, PNG)
@@ -211,7 +211,7 @@ const UpdateCategories = () => {
           </div>
         </form>
       </div>
-    
+
     </div>
   );
 };

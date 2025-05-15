@@ -7,8 +7,8 @@ const CategoryService = {
     try {
       const response = await axios.get(`${API_BASE_URL}/all`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error) {
@@ -21,8 +21,8 @@ const CategoryService = {
     try {
       const response = await axios.get(`${API_BASE_URL}/${id}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error) {
@@ -35,9 +35,9 @@ const CategoryService = {
     try {
       const response = await axios.post(`${API_BASE_URL}/add`, formData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
       return response.data;
     } catch (error) {
@@ -48,12 +48,16 @@ const CategoryService = {
 
   updateCategory: async (id, formData, token) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/update/${id}`, formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.put(
+        `${API_BASE_URL}/update/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
       return response.data;
     } catch (error) {
       console.error('Error updating category:', error);
@@ -63,12 +67,16 @@ const CategoryService = {
 
   updateStatus: async (id, status, token) => {
     try {
-      const response = await axios.patch(`${API_BASE_URL}/status/${id}`, { status }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await axios.patch(
+        `${API_BASE_URL}/status/${id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       return response.data;
     } catch (error) {
       console.error('Error updating status:', error);
@@ -80,8 +88,8 @@ const CategoryService = {
       const response = await axios.get(`${API_BASE_URL}/request/all`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data.data;
     } catch (error) {
@@ -92,16 +100,15 @@ const CategoryService = {
     try {
       const response = await axios.delete(`${API_BASE_URL}/delete/${id}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error) {
       console.error('Error deleting category:', error);
       throw error;
     }
-  }
-  
+  },
 };
 
 export default CategoryService;

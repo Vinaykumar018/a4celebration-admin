@@ -10,9 +10,9 @@ const ViewCategoryModal = ({ category, closeModal }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="viewCategoryModalLabel">Category Details</h5>
-            <button 
-              className="btn-close py-0" 
-              type="button" 
+            <button
+              className="btn-close py-0"
+              type="button"
               onClick={closeModal}
               aria-label="Close"
             ></button>
@@ -32,29 +32,29 @@ const ViewCategoryModal = ({ category, closeModal }) => {
                 </p>
               </div>
             </div>
-            
+
             <div className="mb-3">
               <h6>Featured Image:</h6>
               {category.featurd_image && (
-                <img 
-                  src={`http://localhost:3000/${category.featurd_image}`} 
-                  alt={category.name} 
-                  style={{ maxWidth: '100%', maxHeight: '300px' }} 
+                <img
+                  src={`http://localhost:3000/${category.featurd_image}`}
+                  alt={category.name}
+                  style={{ maxWidth: '100%', maxHeight: '300px' }}
                   className="img-thumbnail"
                 />
               )}
             </div>
-            
+
             <div className="mb-3">
               <h6>Short Description:</h6>
               <p>{category.short_description}</p>
             </div>
-            
+
             <div className="mb-3">
               <h6>Long Description:</h6>
               <p>{category.long_discription}</p>
             </div>
-            
+
             <div className="row">
               <div className="col-md-6 mb-3">
                 <h6>Created At:</h6>
@@ -67,9 +67,9 @@ const ViewCategoryModal = ({ category, closeModal }) => {
             </div>
           </div>
           <div className="modal-footer">
-            <button 
-              className="btn btn-secondary" 
-              type="button" 
+            <button
+              className="btn btn-secondary"
+              type="button"
               onClick={closeModal}
             >
               Close

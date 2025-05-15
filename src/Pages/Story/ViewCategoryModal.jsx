@@ -4,7 +4,7 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
   if (!show || !category) return null;
 
   const getLanguageName = (lang) => {
-    switch(lang) {
+    switch (lang) {
       case 'english': return 'English';
       case 'hindi': return 'Hindi';
       case 'sanskrit': return 'Sanskrit';
@@ -16,7 +16,7 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
     <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
-          
+
           <div className="modal-header">
             <h5 className="modal-title">Category Details</h5>
             <button type="button" className="btn-close" onClick={onClose}></button>
@@ -25,10 +25,10 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
             <div className="row">
               <div className="col-md-4">
                 {category.image && (
-                  <img 
-                    src={`http://localhost:3000${category.image}`} 
-                    alt={category.title} 
-                    width="200" 
+                  <img
+                    src={`http://localhost:3000${category.image}`}
+                    alt={category.title}
+                    width="200"
                     className="img-thumbnail"
                   />
                 )}
@@ -42,7 +42,7 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
                   <h6>Title</h6>
                   <p>{category.title}</p>
                 </div>
-               </div> 
+              </div>
               <div className="col-md-8">
                 <div className="mb-3">
                   <h6>Title</h6>

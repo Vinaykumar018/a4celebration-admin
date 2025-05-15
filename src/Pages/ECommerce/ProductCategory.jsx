@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { 
-  fetchCategories, 
+import {
+  fetchCategories,
   deleteProductCategory,
   updateProductCategoryStatus,
   createCategory,
@@ -60,15 +60,15 @@ const ProductCategory = () => {
   const handleConfirmStatusChange = async () => {
     try {
       const response = await updateProductCategoryStatus(
-        statusToUpdate.id, 
+        statusToUpdate.id,
         statusToUpdate.newStatus ? 'active' : 'inactive'
       );
-      
+
       if (response.status === 1) {
         toast.success("Status updated successfully!");
-        setCategoryData(categoryData.map(item => 
-          item._id === statusToUpdate.id 
-            ? { ...item, status: statusToUpdate.newStatus } 
+        setCategoryData(categoryData.map(item =>
+          item._id === statusToUpdate.id
+            ? { ...item, status: statusToUpdate.newStatus }
             : item
         ));
       } else {
@@ -94,10 +94,10 @@ const ProductCategory = () => {
       name: 'Image',
       cell: (row) => (
         row.category_image ? (
-          <img 
-            src={`http://localhost:3000/${row.category_image}`} 
-            alt={row.category_name} 
-            width="50" 
+          <img
+            src={`http://localhost:3000/${row.category_image}`}
+            alt={row.category_name}
+            width="50"
             height="50"
             style={{ borderRadius: '5px' }}
           />
@@ -117,20 +117,19 @@ const ProductCategory = () => {
       wrap: true,
     },
     {
-        name: 'Status',
-        cell: row => (
-          <span
-            onClick={() => handleToggleStatus(row)}
-            className={`badge rounded-pill px-3 py-1 ${
-              row.status === '1' ? 'bg-success text-white' : 'bg-danger text-white'
+      name: 'Status',
+      cell: row => (
+        <span
+          onClick={() => handleToggleStatus(row)}
+          className={`badge rounded-pill px-3 py-1 ${row.status === '1' ? 'bg-success text-white' : 'bg-danger text-white'
             }`}
-            style={{ cursor: 'pointer' }}
-          >
-            {row.status === '1' ? 'Active' : 'Inactive'}
-          </span>
-        ),
-        sortable: true,
-        width: '120px',
+          style={{ cursor: 'pointer' }}
+        >
+          {row.status === '1' ? 'Active' : 'Inactive'}
+        </span>
+      ),
+      sortable: true,
+      width: '120px',
     },
     {
       name: 'Actions',
@@ -222,7 +221,7 @@ const ProductCategory = () => {
             <button className='btn btn-info' onClick={navigateToAddCategory}>
               <FaPlus className="me-2" />
               Add Category
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">
@@ -274,16 +273,16 @@ const ProductCategory = () => {
                 </p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setShowStatusModal(false)}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success text-white" 
+                <button
+                  type="button"
+                  className="btn btn-success text-white"
                   onClick={handleConfirmStatusChange}
                 >
                   Confirm

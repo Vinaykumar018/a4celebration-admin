@@ -67,7 +67,7 @@ const UpdateDecorations = () => {
       }));
 
       setImagePreviews({
-        featured: currentProduct.featured_image 
+        featured: currentProduct.featured_image
           ? `http://localhost:3000/${currentProduct.featured_image}`
           : null,
         others: currentProduct.other_images?.length > 0
@@ -79,12 +79,12 @@ const UpdateDecorations = () => {
       if (currentProduct.category) {
         const selectedCategory = categories.find(cat => cat._id === currentProduct.category);
         if (selectedCategory) {
-          const childCategories = selectedCategory.child_category 
+          const childCategories = selectedCategory.child_category
             ? Object.entries(selectedCategory.child_category).map(([id, child]) => ({
-                id,
-                name: child.name,
-                image: child.image
-              }))
+              id,
+              name: child.name,
+              image: child.image
+            }))
             : [];
           setAvailableChildCategories(childCategories);
         }
@@ -104,19 +104,19 @@ const UpdateDecorations = () => {
   const handleCategoryChange = (e) => {
     const selectedCategoryId = e.target.value;
     const selectedCategory = categories.find(cat => cat._id === selectedCategoryId);
-    
+
     if (selectedCategory) {
       // Convert the Map-like child_category object to an array
-      const childCategories = selectedCategory.child_category 
+      const childCategories = selectedCategory.child_category
         ? Object.entries(selectedCategory.child_category).map(([id, child]) => ({
-            id,
-            name: child.name,
-            image: child.image
-          }))
+          id,
+          name: child.name,
+          image: child.image
+        }))
         : [];
-      
+
       setAvailableChildCategories(childCategories);
-      
+
       setFormData(prev => ({
         ...prev,
         category: selectedCategory._id,
@@ -133,7 +133,7 @@ const UpdateDecorations = () => {
       id: option.value,
       name: option.label
     }));
-  
+
     setFormData(prev => ({
       ...prev,
       child_categories: selectedChildren
@@ -176,7 +176,7 @@ const UpdateDecorations = () => {
         .replace(/[^\w\s]/gi, '')
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-');
-      
+
       setFormData(prev => ({
         ...prev,
         slug_url: generatedSlug
@@ -188,24 +188,24 @@ const UpdateDecorations = () => {
     setFormData(prev => {
       const newOtherImages = [...prev.other_images];
       const removedImage = newOtherImages.splice(index, 1)[0];
-      
+
       // Clean up object URL if it exists
       if (removedImage instanceof Blob) {
         URL.revokeObjectURL(URL.createObjectURL(removedImage));
       }
-      
+
       return { ...prev, other_images: newOtherImages };
     });
 
     setImagePreviews(prev => {
       const newOtherPreviews = [...prev.others];
       const removedPreview = newOtherPreviews.splice(index, 1)[0];
-      
+
       // Clean up object URL
       if (removedPreview.startsWith('blob:')) {
         URL.revokeObjectURL(removedPreview);
       }
-      
+
       return { ...prev, others: newOtherPreviews };
     });
   }, []);
@@ -386,7 +386,7 @@ const UpdateDecorations = () => {
                 <p className="text-sm text-gray-600">Selected:</p>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {formData.child_categories.map((child, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                     >
@@ -412,8 +412,8 @@ const UpdateDecorations = () => {
               </div>
             )}
             <p className="mt-1 text-sm text-gray-500">
-              {availableChildCategories.length > 0 
-                ? "Hold Ctrl/Cmd to select multiple" 
+              {availableChildCategories.length > 0
+                ? "Hold Ctrl/Cmd to select multiple"
                 : "Select a category first"}
             </p>
           </div>
@@ -521,44 +521,44 @@ const UpdateDecorations = () => {
             </label>
             <RichTextEditor
 
-            placeholder="enter description & kit e.g description: your description,kit: your kits nd materials"
-  value={formData.description}
-  onChange={(value) => handleEditorChange(value, "description")}
-   toolbarConfig={{
-    display: [
-      'INLINE_STYLE_BUTTONS',
-      'BLOCK_TYPE_DROPDOWN',
-      'BLOCK_TYPE_BUTTONS',
-      'LINK_BUTTONS',
-      'HISTORY_BUTTONS',
-    ],
-    INLINE_STYLE_BUTTONS: [
-      { label: 'Bold', style: 'BOLD' },
-      { label: 'Italic', style: 'ITALIC' },
-      { label: 'Underline', style: 'UNDERLINE' },
-      { label: 'Code', style: 'CODE' },
-    ],
-    BLOCK_TYPE_DROPDOWN: [
-      { label: 'Normal', style: 'unstyled' },
-      { label: 'Heading Large', style: 'header-one' },
-      { label: 'Heading Medium', style: 'header-two' },
-      { label: 'Heading Small', style: 'header-three' },
-    ],
-    BLOCK_TYPE_BUTTONS: [
-      { label: 'UL', style: 'unordered-list-item' },
-      { label: 'OL', style: 'ordered-list-item' },
-      { label: 'Blockquote', style: 'blockquote' },
-    ],
-    LINK_BUTTONS: [
-      { label: 'Add Link', style: 'link' },
-      { label: 'Remove Link', style: 'remove-link' },
-    ],
-    HISTORY_BUTTONS: [
-      { label: 'Undo', style: 'undo' },
-      { label: 'Redo', style: 'redo' },
-    ]
-  }}
-/>
+              placeholder="enter description & kit e.g description: your description,kit: your kits nd materials"
+              value={formData.description}
+              onChange={(value) => handleEditorChange(value, "description")}
+              toolbarConfig={{
+                display: [
+                  'INLINE_STYLE_BUTTONS',
+                  'BLOCK_TYPE_DROPDOWN',
+                  'BLOCK_TYPE_BUTTONS',
+                  'LINK_BUTTONS',
+                  'HISTORY_BUTTONS',
+                ],
+                INLINE_STYLE_BUTTONS: [
+                  { label: 'Bold', style: 'BOLD' },
+                  { label: 'Italic', style: 'ITALIC' },
+                  { label: 'Underline', style: 'UNDERLINE' },
+                  { label: 'Code', style: 'CODE' },
+                ],
+                BLOCK_TYPE_DROPDOWN: [
+                  { label: 'Normal', style: 'unstyled' },
+                  { label: 'Heading Large', style: 'header-one' },
+                  { label: 'Heading Medium', style: 'header-two' },
+                  { label: 'Heading Small', style: 'header-three' },
+                ],
+                BLOCK_TYPE_BUTTONS: [
+                  { label: 'UL', style: 'unordered-list-item' },
+                  { label: 'OL', style: 'ordered-list-item' },
+                  { label: 'Blockquote', style: 'blockquote' },
+                ],
+                LINK_BUTTONS: [
+                  { label: 'Add Link', style: 'link' },
+                  { label: 'Remove Link', style: 'remove-link' },
+                ],
+                HISTORY_BUTTONS: [
+                  { label: 'Undo', style: 'undo' },
+                  { label: 'Redo', style: 'redo' },
+                ]
+              }}
+            />
           </div>
 
           {/* Featured Image */}
@@ -576,7 +576,7 @@ const UpdateDecorations = () => {
             {imagePreviews.featured && (
               <div className="mt-2">
                 <p className="text-sm text-gray-600 mb-1">
-                  {formData.featured_image instanceof File 
+                  {formData.featured_image instanceof File
                     ? `New file: ${formData.featured_image.name}`
                     : "Current featured image"}
                 </p>
@@ -605,7 +605,7 @@ const UpdateDecorations = () => {
             {imagePreviews.others.length > 0 && (
               <div className="mt-2">
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  {formData.other_images.length > 0 
+                  {formData.other_images.length > 0
                     ? `Selected images (${formData.other_images.length})`
                     : "Current product images"}
                 </p>
@@ -622,10 +622,10 @@ const UpdateDecorations = () => {
                       <button
                         type="button"
                         onClick={() => removeOtherImage(index)}
-                       
+
                       >
-                        
-                      remove
+
+                        remove
                       </button>
                     </div>
                   ))}

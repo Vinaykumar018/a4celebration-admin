@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const BASE_URL = `http://localhost:3000/api/bhajanMandal`;
-const AUTH_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
+const AUTH_TOKEN =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
 
 // Category related APIs
 export const createCategory = async (data) => {
@@ -67,20 +68,23 @@ export const UpdateBhajanCategory = async (id, updatedData) => {
   }
 };
 
-export const UpdateBhajanCategoryStatus = async (bhajanCategoryId, newStatus) => {
+export const UpdateBhajanCategoryStatus = async (
+  bhajanCategoryId,
+  newStatus,
+) => {
   try {
     const response = await axios.put(
       `${BASE_URL}/update-category-status`,
       {
         bhajanCategoryId,
-        newStatus
+        newStatus,
       },
       {
         headers: {
           'Content-Type': 'application/json',
           Authorization: AUTH_TOKEN,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -94,7 +98,7 @@ export const createBhajanMandal = async (data) => {
   try {
     const response = await axios.post(`${BASE_URL}/create`, data, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
         Authorization: AUTH_TOKEN,
       },
     });
@@ -142,7 +146,7 @@ export const UpdateBhajanStatus = async (bhajanStautusId, newStatus) => {
         headers: {
           Authorization: AUTH_TOKEN,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -175,7 +179,7 @@ export const fetchVideos = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch videos:", error);
+    console.error('Failed to fetch videos:', error);
     throw error;
   }
 };
@@ -189,21 +193,25 @@ export const getBhajanById = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching Bhajan by ID:", error);
+    console.error('Error fetching Bhajan by ID:', error);
     throw error;
   }
 };
 
 export const UpdateBhajanMandalStatus = async (bhajanCategoryId, newStatus) => {
   try {
-    const response = await axios.put(`${BASE_URL}/update-category-status`, {
-      "bhajanCategoryId": bhajanCategoryId,
-      "newStatus": newStatus
-    }, {
-      headers: {
-        Authorization: AUTH_TOKEN,
+    const response = await axios.put(
+      `${BASE_URL}/update-category-status`,
+      {
+        bhajanCategoryId: bhajanCategoryId,
+        newStatus: newStatus,
       },
-    });
+      {
+        headers: {
+          Authorization: AUTH_TOKEN,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error('Error updating Status:', error);
@@ -215,11 +223,12 @@ export const fetchBhajanMandalById = async (id) => {
   try {
     const response = await fetch(`${BASE_URL}/single_bhajan/${id}`, {
       headers: {
-        Authorization: AUTH_TOKEN      }
+        Authorization: AUTH_TOKEN,
+      },
     });
     return await response.json();
   } catch (error) {
-    console.error("Error fetching bhajan mandal:", error);
+    console.error('Error fetching bhajan mandal:', error);
     throw error;
   }
 };

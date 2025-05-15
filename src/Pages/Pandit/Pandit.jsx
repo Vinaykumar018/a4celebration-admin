@@ -30,7 +30,7 @@ function Pandit() {
       setLoading(true);
       const response = await fetchPandits.getAll();
       setPanditData(response.data);
-      
+
       // Load categories for each pandit
       const categories = {};
       for (const pandit of response.data) {
@@ -123,12 +123,12 @@ function Pandit() {
     {
       name: 'Image',
       cell: (row) => (
-        <img 
-          src={IMGURL + row.image} 
-          alt={row.username} 
-          width="70" 
+        <img
+          src={IMGURL + row.image}
+          alt={row.username}
+          width="70"
           height="70"
-          style={{height:'70px',width:'70px',borderRadius:'50% !important'}}
+          style={{ height: '70px', width: '70px', borderRadius: '50% !important' }}
           className="rounded-50"
         />
       ),
@@ -159,7 +159,7 @@ function Pandit() {
       name: 'Experience',
       selector: row => `${row.experience} years`,
       sortable: true,
-      wrap:true,
+      wrap: true,
     },
     {
       name: 'Category',
@@ -243,7 +243,7 @@ function Pandit() {
             <h5 className="mb-3">All Pandits</h5>
             <button className='btn btn-info' onClick={navigateToAddPandit}>
               Add Pandit
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">

@@ -69,7 +69,7 @@ export const updateProduct = async (id, formData) => {
  */
 export const getProductById = async (productId) => {
   try {
-    const response = await axios.get(`${API_URL}decoration/get-product/${productId}`, {
+    const response = await axios.get(`${API_URL}decoration/get-product-by-id/${productId}`, {
       headers: {
         Authorization: `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',

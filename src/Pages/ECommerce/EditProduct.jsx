@@ -9,9 +9,9 @@ const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [categoryData, setCategoryData] = useState([]);
-  const [imagePreview, setImagePreview] = useState({ 
-    featuredImage: null, 
-    galleryImages: [] 
+  const [imagePreview, setImagePreview] = useState({
+    featuredImage: null,
+    galleryImages: []
   });
   const [formData, setFormData] = useState({
     name: "",
@@ -156,7 +156,7 @@ const EditProduct = () => {
     const updatedGallery = [...formData.galleryImages];
     updatedGallery.splice(index, 1);
     setFormData({ ...formData, galleryImages: updatedGallery });
-    
+
     const updatedPreviews = [...imagePreview.galleryImages];
     updatedPreviews.splice(index, 1);
     setImagePreview({ ...imagePreview, galleryImages: updatedPreviews });
@@ -170,7 +170,7 @@ const EditProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Basic validation
     if (!formData.name || !formData.category || !formData.price) {
       toast.error("Please fill in all required fields");
@@ -179,7 +179,7 @@ const EditProduct = () => {
 
     setIsSubmitting(true);
     const productData = new FormData();
-  
+
     // Append all form data to FormData
     productData.append("name", formData.name);
     productData.append("slug_url", formData.slug_url);
@@ -206,7 +206,7 @@ const EditProduct = () => {
     existingGalleryImages.forEach((image) => {
       productData.append("existingGalleryImages", image);
     });
-    
+
     // Then add new gallery images
     if (formData.galleryImages.length > 0) {
       formData.galleryImages.forEach((file) => {
@@ -215,7 +215,7 @@ const EditProduct = () => {
         }
       });
     }
-  
+
     try {
       const response = await updateProduct(id, productData);
       if (response.success) {
@@ -267,7 +267,7 @@ const EditProduct = () => {
               />
               <div className="valid-feedback">Looks good!</div>
             </div>
-            
+
             {/* Product Slug */}
             <div className="col-span-6 xl:col-span-6 sm:col-span-12">
               <label className="form-label">Product Slug</label>
@@ -355,7 +355,7 @@ const EditProduct = () => {
               <input
                 type="number"
                 className="form-control"
-                name="gst"  
+                name="gst"
                 placeholder="Enter GST"
                 value={formData.gst}
                 onChange={handleInputChange}
@@ -458,7 +458,7 @@ const EditProduct = () => {
                     </button>
                   </div>
                 ))}
-                
+
                 {existingGalleryImages.map((image, index) => (
                   <div key={`existing-${index}`} className="position-relative me-2 mb-2">
                     <img
@@ -520,7 +520,7 @@ const EditProduct = () => {
                   value={formData.long_discription}
                   onChange={handleEditorChange}
                   className="h-full"
-                  style={{maxHeight:"400px"}}
+                  style={{ maxHeight: "400px" }}
                   editorClassName="rich-text-editor h-full"
                   toolbarClassName="rich-text-toolbar"
                   placeholder="Enter Long Description"

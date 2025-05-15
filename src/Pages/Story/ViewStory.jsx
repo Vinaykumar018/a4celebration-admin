@@ -23,7 +23,7 @@ const ViewStory = () => {
         if (storyResponse && storyResponse.story) {
           setStory(storyResponse.story);
           setSelectedStatus(storyResponse.story.status || 'draft');
-          
+
           const substoriesResponse = await fetchSubstoriesByStoryId(id);
           if (substoriesResponse && substoriesResponse.data) {
             setSubstories(substoriesResponse.data);
@@ -44,7 +44,7 @@ const ViewStory = () => {
 
   const getStatusClass = (status) => {
     if (!status) return "pending";
-    
+
     switch (status.toLowerCase()) {
       case "active": return "completed";
       case "draft": return "pending";
@@ -105,7 +105,7 @@ const ViewStory = () => {
   return (
     <div className="story-details-container card">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
       {/* Story Header */}
       <div className="story-header">
         <h2>
@@ -117,7 +117,7 @@ const ViewStory = () => {
           </span>
           <div className="action-buttons mt-0">
             <button onClick={() => navigate(-1)} className="back-button bg-danger">
-              <i className="fas fa-arrow-left"></i> Back 
+              <i className="fas fa-arrow-left"></i> Back
             </button>
           </div>
         </div>
@@ -142,12 +142,12 @@ const ViewStory = () => {
                 </button>
               </div>
             </div>
-           
+
             <div className="story-image-container">
               {story.image ? (
-                <img 
-                  src={`http://localhost:3000${story.image}`} 
-                  alt={story.title || 'Story cover'} 
+                <img
+                  src={`http://localhost:3000${story.image}`}
+                  alt={story.title || 'Story cover'}
                   className="story-image"
                 />
               ) : (
@@ -164,16 +164,16 @@ const ViewStory = () => {
             <h3 className="card-title">
               <i className="fas fa-align-left"></i> Story Content
             </h3>
-            <div 
-              className="story-content" 
-              dangerouslySetInnerHTML={{ __html: story.long_description || '<p>No content available</p>' }} 
+            <div
+              className="story-content"
+              dangerouslySetInnerHTML={{ __html: story.long_description || '<p>No content available</p>' }}
             />
           </div>
         </div>
 
         {/* Right Column */}
         <div className="story-right-column">
-         
+
           {/* Substories Section */}
           <div className="story-card">
             <div className="card-title common-flex justify-between p-2">
@@ -181,7 +181,7 @@ const ViewStory = () => {
                 <i className="fas fa-layer-group"></i> Substories ({substories.length})
               </h5>
               <div className="common-flex substories-actions">
-                
+
                 <button
                   onClick={() => navigate(`/story/${id}/substories`)}
                   className="action-btn secondary"
@@ -190,7 +190,7 @@ const ViewStory = () => {
                 </button>
               </div>
             </div>
-            
+
             {substories.length === 0 ? (
               <div className="no-substories">
                 <i className="fas fa-book-open"></i>
@@ -202,8 +202,8 @@ const ViewStory = () => {
                   <div key={substory._id} className="substory-item">
                     <div className="substory-image">
                       {substory.images && substory.images.length > 0 ? (
-                        <img 
-                          src={`http://localhost:3000${substory.images[0]}`} 
+                        <img
+                          src={`http://localhost:3000${substory.images[0]}`}
                           alt={substory.title || 'Substory'}
                         />
                       ) : (
@@ -215,8 +215,8 @@ const ViewStory = () => {
                     <div className="substory-details">
                       <h4>{substory.title || 'Untitled Substory'}</h4>
                       <p className="substory-description">
-                        {substory.description && substory.description.length > 100 
-                          ? `${substory.description.substring(0, 100)}...` 
+                        {substory.description && substory.description.length > 100
+                          ? `${substory.description.substring(0, 100)}...`
                           : substory.description || 'No description available'}
                       </p>
                       <button

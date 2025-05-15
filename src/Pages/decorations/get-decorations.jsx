@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts,removeProduct } from '../../redux/productSlice';
+import { fetchProducts, removeProduct } from '../../redux/productSlice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -26,12 +26,12 @@ const GetDecorations = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
-  
+
   const confirmDelete = (category) => {
     setProductToDelete(category);
     setShowModal(true);
   };
-  
+
   const handleConfirmDelete = async () => {
     try {
       await dispatch(removeProduct(productToDelete._id)).unwrap();
@@ -44,7 +44,7 @@ const GetDecorations = () => {
       setProductToDelete(null);
     }
   };
-  
+
 
   const columns = [
     {
@@ -139,35 +139,35 @@ const GetDecorations = () => {
           <GetTable
             columns={columns}
             data={products}
-            
+
             title="Pandits List"
           />
         </div>
       </div>
       {showModal && (
-  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded shadow-lg w-96">
-      <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-      <p>Are you sure you want to delete <strong>{productToDelete?.category_name}</strong>?</p>
-      <div className="mt-6 flex justify-end gap-4">
-        <button
-          onClick={() => setShowModal(false)}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={handleConfirmDelete}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+            <p>Are you sure you want to delete <strong>{productToDelete?.category_name}</strong>?</p>
+            <div className="mt-6 flex justify-end gap-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-<ToastContainer></ToastContainer>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }

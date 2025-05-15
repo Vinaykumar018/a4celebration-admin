@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
-import { getOrders } from '../../Services/orders-api-service'; 
+import { getOrders } from '../../Services/decoration-orders-api-service'; 
 
 const Orders = () => {
   const [ordersData, setOrdersData] = useState([]);
@@ -171,14 +171,26 @@ const confirmDelete = (order) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
+<div className="card">
+        <div className="card-header pb-2 pt-4 card-border mb-5">
+          <div className='common-flex justify-between item-center'>
+            <h5 className="mb-3">All Decoration Orders</h5>
+            <button className='btn btn-info' >
+              All Decoration Orders
+            </button>
+          </div>
+        </div>
         <GetTable 
+        
           columns={columns} 
           data={ordersData} 
           title="Orders List"
           showSearch={true}
           showPagination={true}
         />
+        </div>
       )}
+      
     </div>
   );
 };

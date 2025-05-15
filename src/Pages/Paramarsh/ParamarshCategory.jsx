@@ -58,7 +58,7 @@ function ParamarshCategory() {
         long_discription: category.long_discription,
         status: category.status.toString(),
         featurd_image: null,
-        imagePreview: category.featurd_image 
+        imagePreview: category.featurd_image
           ? `http://localhost:3000/${category.featurd_image}`
           : null
       });
@@ -128,7 +128,7 @@ function ParamarshCategory() {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
@@ -182,7 +182,7 @@ function ParamarshCategory() {
 
   const handleDelete = async () => {
     if (!deleteCategory) return;
-    
+
     try {
       await CategoryService.deleteCategory(deleteCategory._id, token);
       toast.success('Category deleted successfully!');
@@ -241,9 +241,9 @@ function ParamarshCategory() {
       name: 'Featured Image',
       cell: (row) => (
         row.featurd_image && (
-          <img 
-            src={`http://localhost:3000${row.featurd_image}`} 
-            alt={row.name} 
+          <img
+            src={`http://localhost:3000${row.featurd_image}`}
+            alt={row.name}
             style={{ width: '50px', height: '50px', objectFit: 'cover' }}
             className="img-thumbnail"
           />
@@ -259,9 +259,9 @@ function ParamarshCategory() {
     {
       name: 'Status',
       cell: (row) => (
-        <span 
+        <span
           className={`badge ${row.status === "1" ? "bg-success" : "bg-danger"}`}
-          style={{cursor:"pointer"}} 
+          style={{ cursor: "pointer" }}
           onClick={() => handleStatusChange(row._id, row.status)}
         >
           {row.status === "1" ? "Active" : "Inactive"}
@@ -319,14 +319,14 @@ function ParamarshCategory() {
         <div className="card-header pb-0 card-no-border">
           <div className='common-flex justify-between item-center'>
             <h5 className="mb-3">Paramarsh Category</h5>
-            <button 
-              className="btn btn-info" 
-              type="button" 
+            <button
+              className="btn btn-info"
+              type="button"
               onClick={openAddModal}
               disabled={isLoading}
             >
               {isLoading ? 'Loading...' : 'Add Category'}
-            </button>                    
+            </button>
           </div>
         </div>
         <div className="card-body">
@@ -359,18 +359,18 @@ function ParamarshCategory() {
         fileInputRef={fileInputRef}
       />
 
-      <ViewCategoryModal 
-        category={viewCategory} 
-        closeModal={closeViewModal} 
+      <ViewCategoryModal
+        category={viewCategory}
+        closeModal={closeViewModal}
       />
 
-      <DeleteConfirmationModal 
+      <DeleteConfirmationModal
         item={deleteCategory}
         onConfirm={handleDelete}
         onCancel={closeDeleteModal}
         itemType="category"
       />
-    </div>  
+    </div>
   );
 }
 

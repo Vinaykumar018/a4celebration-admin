@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { 
-  getCategories, 
+import {
+  getCategories,
   deleteSliderCategory,
-  updateSliderCategoryStatus 
+  updateSliderCategoryStatus
 } from "../../Services/sliderApiService";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,15 +58,15 @@ const SliderCategoryList = () => {
   const handleConfirmStatusChange = async () => {
     try {
       const response = await updateSliderCategoryStatus(
-        statusToUpdate.id, 
+        statusToUpdate.id,
         statusToUpdate.newStatus ? 'active' : 'inactive'
       );
-      
+
       if (response.status === 1) {
         toast.success("Status updated successfully!");
-        setCategoryData(categoryData.map(item => 
-          item._id === statusToUpdate.id 
-            ? { ...item, status: statusToUpdate.newStatus } 
+        setCategoryData(categoryData.map(item =>
+          item._id === statusToUpdate.id
+            ? { ...item, status: statusToUpdate.newStatus }
             : item
         ));
       } else {
@@ -92,10 +92,10 @@ const SliderCategoryList = () => {
       name: 'Image',
       cell: (row) => (
         row.image ? (
-          <img 
-            src={IMGURL+row.image} 
-            alt={row.name} 
-            width="50" 
+          <img
+            src={IMGURL + row.image}
+            alt={row.name}
+            width="50"
             height="50"
             style={{ borderRadius: '5px' }}
           />
@@ -114,9 +114,8 @@ const SliderCategoryList = () => {
       cell: row => (
         <span
           onClick={() => handleToggleStatus(row)}
-          className={`badge rounded-pill px-3 py-1 cursor-pointer ${
-            row.status ? 'bg-success text-white' : 'bg-danger text-white'
-          }`}
+          className={`badge rounded-pill px-3 py-1 cursor-pointer ${row.status ? 'bg-success text-white' : 'bg-danger text-white'
+            }`}
           style={{ cursor: 'pointer' }}
         >
           {row.status ? 'Active' : 'Inactive'}
@@ -213,7 +212,7 @@ const SliderCategoryList = () => {
             <button className='btn btn-info' onClick={navigateToAddCategory}>
               <FaPlus className="me-2" />
               Add Category
-            </button>               
+            </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">
@@ -265,16 +264,16 @@ const SliderCategoryList = () => {
                 </p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-danger text-white" 
+                <button
+                  type="button"
+                  className="btn btn-danger text-white"
                   onClick={() => setShowStatusModal(false)}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success text-white" 
+                <button
+                  type="button"
+                  className="btn btn-success text-white"
                   onClick={handleConfirmStatusChange}
                 >
                   Confirm
