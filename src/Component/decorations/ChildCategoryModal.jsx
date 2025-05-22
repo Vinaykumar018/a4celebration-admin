@@ -45,7 +45,7 @@ const ChildCategoryModal = ({
 
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `http://localhost:3000/api/category/add-child-category/${row}`,
+        `https://a4celebration.com/api/api/category/add-child-category/${row}`,
         {
           method: 'POST',
           headers: {
@@ -84,7 +84,7 @@ const ChildCategoryModal = ({
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `http://localhost:3000/api/category/remove-child-category/${row._id}`,
+        `https://a4celebration.com/api/api/category/remove-child-category/${row._id}`,
         {
           method: 'DELETE',
           headers: {
@@ -211,7 +211,7 @@ const ChildCategoryModal = ({
                       <div className="flex items-center">
                         {child.image && (
                           <img
-                            src={`http://localhost:3000${child.image}`}
+                            src={`https://a4celebration.com/api${child.image}`}
                             alt={child.name}
                             className="w-8 h-8 object-cover rounded-full mr-2"
                           />

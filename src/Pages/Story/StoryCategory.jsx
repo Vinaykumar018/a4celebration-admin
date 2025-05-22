@@ -57,7 +57,7 @@ const StoryCategory = () => {
       cell: (row) => (
         row.image ? (
           <img
-            src={`http://localhost:3000${row.image}`}
+            src={`https://a4celebration.com/api${row.image}`}
             alt={row.title}
             width="50"
             height="50"

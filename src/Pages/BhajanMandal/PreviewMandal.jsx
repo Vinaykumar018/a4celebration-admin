@@ -175,7 +175,7 @@ const PreviewMandal = () => {
             <div className="col-md-4">
               <div className="card mb-3">
                 <img
-                  src={`http://localhost:3000${bhajanData.bhajan_image}`}
+                  src={`https://a4celebration.com/api${bhajanData.bhajan_image}`}
                   alt={bhajanData.bhajan_name}
                   className="card-img-top"
                 />

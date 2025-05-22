@@ -18,7 +18,7 @@ const UserBookingList = () => {
   const [moreInfoExpanded, setMoreInfoExpanded] = useState(true);
 
   const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
-  const url = 'http://localhost:3000/api/user/get-booking-user';
+  const url = 'https://a4celebration.com/api/api/user/get-booking-user';
 
   const fetchBookings = async () => {
     setLoading(true);

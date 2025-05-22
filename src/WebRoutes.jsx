@@ -43,6 +43,9 @@ import CreateDecorations from './Pages/decorations/create-decorations';
 import GetDecorations from './Pages/decorations/get-decorations';
 import UpdateDecorations from './Pages/decorations/update-decorations';
 import Orders from './Pages/decoration-orders/Orders';
+import CreateGifts from './Pages/giftings/create-gift';
+import GetGifts from './Pages/giftings/get-all-gifts';
+import UpdateGifts from './Pages/giftings/update-gift';
 
 function WebRoutes() {
   return (
@@ -62,10 +65,16 @@ function WebRoutes() {
       <Route path="/create/create-decoration" element={<CreateDecorations/>}/>
       <Route path="/get/get-decoration" element={<GetDecorations/>}/>
       <Route path="/update/update-product-list/:id" element={<UpdateDecorations/>}/>
-
-
-
        <Route path="/decoration/orders" element={<Orders/>}/>
+
+
+
+       <Route path="/create/create-gift" element={
+        <CreateGifts></CreateGifts>
+       }/>
+        <Route path="/get/get-gifts" element={<GetGifts></GetGifts>}/>
+      <Route path="/update/update-gift-list/:id" element={<UpdateGifts></UpdateGifts>}/>
+       <Route path="/gift/orders" element={<Orders/>}/>
 
 
 

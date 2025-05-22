@@ -1,14 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createProduct } from "../../Services/decoration-api-service";
-import { fetchCategories } from '../../redux/categoriesSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { fetchProductById, modifyProduct } from '../../redux/giftingsSlice';
+import { fetchCategories } from '../../redux/categoriesSlice';
 import { FaRupeeSign } from "react-icons/fa";
 import RichTextEditor from "react-rte";
 
-const CreateDecorations = () => {
+const UpdateGifts = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const { currentProduct, loading, error } = useSelector((state) => state.products);
   const { categories, loading: categoriesLoading } = useSelector((state) => state.categories);
 
   const [availableChildCategories, setAvailableChildCategories] = useState([]);
@@ -30,32 +33,70 @@ const CreateDecorations = () => {
     child_categories: []
   });
 
-  const handleEditorChange = (value, fieldName) => {
-    setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
-  };
+  const [imagePreviews, setImagePreviews] = useState({
+    featured: null,
+    others: []
+  });
 
-  // Generate a unique product ID
-  const generateProductId = useCallback(() => {
-    const prefix = 'PROD-DECORATION-';
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const timestamp = Date.now().toString().slice(-4);
-    return `${prefix}${randomNum}${timestamp}`;
-  }, []);
-
-  // Fetch categories on component mount
+  // Fetch product and categories data
   useEffect(() => {
-    dispatch(fetchCategories());
-    setFormData(prev => ({
-      ...prev,
-      product_id: generateProductId()
-    }));
-  }, [dispatch, generateProductId]);
+    if (id) {
+      dispatch(fetchProductById(id));
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, id]);
+
+  // Update form data when currentProduct changes
+  useEffect(() => {
+    if (currentProduct) {
+      setFormData(prev => ({
+        ...prev,
+        product_id: currentProduct.product_id || "",
+        name: currentProduct.name || "",
+        slug_url: currentProduct.slug_url || "",
+        description: RichTextEditor.createValueFromString(currentProduct.description, 'html') || "",
+        short_description: currentProduct.short_description || "",
+        category: currentProduct.category || "",
+        category_name: currentProduct.category_name || "",
+        price: currentProduct.price || "",
+        unit: currentProduct.unit || "pcs",
+        stock_left: currentProduct.stock_left || "",
+        isOffer: currentProduct.isOffer || false,
+        status: currentProduct.status || "active",
+        child_categories: currentProduct.child_categories || []
+      }));
+
+      setImagePreviews({
+        featured: currentProduct.featured_image
+          ? `https://a4celebration.com/api/${currentProduct.featured_image}`
+          : null,
+        others: currentProduct.other_images?.length > 0
+          ? currentProduct.other_images.map(img => `https://a4celebration.com/api/${img}`)
+          : []
+      });
+
+      // Find and set available child categories if category is already selected
+      if (currentProduct.category) {
+        const selectedCategory = categories.find(cat => cat._id === currentProduct.category);
+        if (selectedCategory) {
+          const childCategories = selectedCategory.child_category
+            ? Object.entries(selectedCategory.child_category).map(([id, child]) => ({
+              id,
+              name: child.name,
+              image: child.image
+            }))
+            : [];
+          setAvailableChildCategories(childCategories);
+        }
+      }
+    }
+  }, [currentProduct, categories]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -99,6 +140,34 @@ const CreateDecorations = () => {
     }));
   };
 
+  const handleFeaturedImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({
+        ...prev,
+        featured_image: file
+      }));
+      setImagePreviews(prev => ({
+        ...prev,
+        featured: URL.createObjectURL(file)
+      }));
+    }
+  };
+
+  const handleOtherImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        other_images: [...prev.other_images, ...files]
+      }));
+      setImagePreviews(prev => ({
+        ...prev,
+        others: [...prev.others, ...files.map(file => URL.createObjectURL(file))]
+      }));
+    }
+  };
+
   // Generate slug from product name
   useEffect(() => {
     if (formData.name) {
@@ -115,32 +184,31 @@ const CreateDecorations = () => {
     }
   }, [formData.name]);
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-
-    if (name === "featured_image" && files[0]) {
-      setFormData(prev => ({ ...prev, featured_image: files[0] }));
-    } else if (name === "other_images" && files.length > 0) {
-      setFormData(prev => ({
-        ...prev,
-        other_images: [...prev.other_images, ...Array.from(files)],
-      }));
-    }
-  };
-
-  const removeOtherImage = (index) => {
+  const removeOtherImage = useCallback((index) => {
     setFormData(prev => {
-      const updatedImages = [...prev.other_images];
-      const removedImage = updatedImages.splice(index, 1)[0];
+      const newOtherImages = [...prev.other_images];
+      const removedImage = newOtherImages.splice(index, 1)[0];
 
       // Clean up object URL if it exists
       if (removedImage instanceof Blob) {
         URL.revokeObjectURL(URL.createObjectURL(removedImage));
       }
 
-      return { ...prev, other_images: updatedImages };
+      return { ...prev, other_images: newOtherImages };
     });
-  };
+
+    setImagePreviews(prev => {
+      const newOtherPreviews = [...prev.others];
+      const removedPreview = newOtherPreviews.splice(index, 1)[0];
+
+      // Clean up object URL
+      if (removedPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(removedPreview);
+      }
+
+      return { ...prev, others: newOtherPreviews };
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -151,11 +219,11 @@ const CreateDecorations = () => {
       // Convert RichTextEditor content to HTML string
       const descriptionHTML = formData.description.toString('html');
 
-      // Append all form data
+      // Append all form fields
       data.append('product_id', formData.product_id);
       data.append('name', formData.name);
       data.append('slug_url', formData.slug_url);
-      data.append('description', descriptionHTML);  // Use the converted HTML
+      data.append('description', descriptionHTML);
       data.append('short_description', formData.short_description);
       data.append('category', formData.category);
       data.append('category_name', formData.category_name);
@@ -179,42 +247,43 @@ const CreateDecorations = () => {
         data.append('other_images', file);
       });
 
-      await createProduct(data);
-      toast.success("Product created successfully!");
-
-      // Reset form
-      setFormData({
-        product_id: generateProductId(),
-        name: "",
-        slug_url: "",
-        description: RichTextEditor.createEmptyValue(),  // Reset to empty editor
-        short_description: "",
-        category: "",
-        category_name: "",
-        price: "",
-        unit: "pcs",
-        stock_left: "",
-        isOffer: false,
-        status: "active",
-        featured_image: null,
-        other_images: [],
-        child_categories: []
-      });
-      setAvailableChildCategories([]);
+      await dispatch(modifyProduct({ id, formData: data })).unwrap();
+      toast.success("Product updated successfully!");
     } catch (error) {
-      console.error("Product creation error:", error);
-      toast.error(error.message || "Failed to create product");
+      console.error("Update product error:", error);
+      toast.error(error.message || "Failed to update product");
     }
+  };
+
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+
+  if (error) return (
+    <div className="text-center py-8">
+      <div className="inline-flex items-center px-4 py-2 bg-red-100 border border-red-400 text-red-700 rounded">
+        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Error: {error}
+      </div>
+    </div>
+  );
+
+  const handleEditorChange = (value, fieldName) => {
+    setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
   };
 
   return (
     <div className="mt-4 px-4 sm:px-6 lg:px-8">
       <ToastContainer position="top-center" autoClose={3000} />
       <div className="bg-white shadow-md rounded-lg p-6">
-        <h4 className="text-xl font-semibold text-center mb-6">Create New Product</h4>
+        <h4 className="text-xl font-semibold text-center mb-6">Update Product</h4>
 
         <form onSubmit={handleSubmit}>
-          {/* Product Name and Slug URL */}
+          {/* Product Name and Slug */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -226,7 +295,7 @@ const CreateDecorations = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                placeholder="e.g. Product Name"
+                placeholder="e.g. Rose Gold Decorations"
                 required
               />
             </div>
@@ -349,10 +418,6 @@ const CreateDecorations = () => {
             </p>
           </div>
 
-          {/* Rest of your form remains the same */}
-          {/* Price and Unit, Stock and Status, Descriptions, Images, etc. */}
-          {/* ... */}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -388,10 +453,11 @@ const CreateDecorations = () => {
                 required
               >
                 <option value="pcs">Pieces</option>
-                <option value="kg">Kilograms</option>
-                <option value="g">Grams</option>
-                <option value="l">Liters</option>
-                <option value="ml">Milliliters</option>
+                <option value="set">Set</option>
+                <option value="kg">Kilogram</option>
+                <option value="g">Gram</option>
+                <option value="l">Liter</option>
+                <option value="ml">Milliliter</option>
               </select>
             </div>
           </div>
@@ -408,7 +474,7 @@ const CreateDecorations = () => {
                 value={formData.stock_left}
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                placeholder="e.g. 50"
+                placeholder="e.g. 100"
                 min="0"
                 required
               />
@@ -416,17 +482,18 @@ const CreateDecorations = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Status
+                Status <span className="text-red-500">*</span>
               </label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                required
               >
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
-                <option value="draft">Draft</option>
+                <option value="out_of_stock">Out of Stock</option>
               </select>
             </div>
           </div>
@@ -453,12 +520,10 @@ const CreateDecorations = () => {
               Full Description <span className="text-red-500">*</span>
             </label>
             <RichTextEditor
+
+              placeholder="enter description & kit e.g description: your description,kit: your kits nd materials"
               value={formData.description}
               onChange={(value) => handleEditorChange(value, "description")}
-              placeholder="Enter description & kit e.g. description: your description, kit: your kits and materials"
-              editorStyle={{
-                minHeight: "120px",
-              }}
               toolbarConfig={{
                 display: [
                   'INLINE_STYLE_BUTTONS',
@@ -494,10 +559,9 @@ const CreateDecorations = () => {
                 ]
               }}
             />
-
           </div>
 
-          {/* Images */}
+          {/* Featured Image */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Featured Image <span className="text-red-500">*</span>
@@ -505,64 +569,63 @@ const CreateDecorations = () => {
             <input
               type="file"
               name="featured_image"
-              onChange={handleFileChange}
+              onChange={handleFeaturedImageChange}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               accept="image/*"
-              required
             />
-            {formData.featured_image && (
+            {imagePreviews.featured && (
               <div className="mt-2">
                 <p className="text-sm text-gray-600 mb-1">
-                  Selected: {formData.featured_image.name}
+                  {formData.featured_image instanceof File
+                    ? `New file: ${formData.featured_image.name}`
+                    : "Current featured image"}
                 </p>
-                <div className="w-full max-w-xs">
-                  <img
-                    src={URL.createObjectURL(formData.featured_image)}
-                    alt="Featured preview"
-                    className="max-h-40 object-contain border rounded"
-                  />
-                </div>
+                <img
+                  src={imagePreviews.featured}
+                  alt="Featured Preview"
+                  className="w-32 h-32 object-contain border rounded"
+                />
               </div>
             )}
           </div>
 
+          {/* Other Images */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
-              Additional Images (Optional)
+              Additional Images
             </label>
             <input
               type="file"
               name="other_images"
-              onChange={handleFileChange}
-              multiple
+              onChange={handleOtherImagesChange}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               accept="image/*"
+              multiple
             />
-            {formData.other_images.length > 0 && (
+            {imagePreviews.others.length > 0 && (
               <div className="mt-2">
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  Selected images ({formData.other_images.length})
+                  {formData.other_images.length > 0
+                    ? `Selected images (${formData.other_images.length})`
+                    : "Current product images"}
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                  {formData.other_images.map((file, index) => (
+                  {imagePreviews.others.map((img, index) => (
                     <div key={index} className="relative group">
                       <div className="border rounded p-1">
                         <img
-                          src={URL.createObjectURL(file)}
+                          src={img}
                           alt={`Preview ${index + 1}`}
                           className="h-24 w-full object-contain"
                         />
-                        <p className="text-xs text-gray-600 truncate mt-1">{file.name}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => removeOtherImage(index)}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Remove image"
+
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+
+                        remove
                       </button>
                     </div>
                   ))}
@@ -586,14 +649,13 @@ const CreateDecorations = () => {
             </label>
           </div>
 
-
           {/* Submit Button */}
           <div className="text-center">
             <button
               type="submit"
               className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
             >
-              Create Product
+              Update Product
             </button>
           </div>
         </form>
@@ -602,4 +664,4 @@ const CreateDecorations = () => {
   );
 };
 
-export default CreateDecorations;
+export default UpdateGifts;

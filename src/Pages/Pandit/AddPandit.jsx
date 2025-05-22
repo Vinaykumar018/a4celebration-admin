@@ -225,7 +225,7 @@ const AddPandit = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/pandit/create-pandit', {
+      const response = await fetch('https://a4celebration.com/api/api/pandit/create-pandit', {
         method: 'POST',
         headers: {
           Authorization: token,

@@ -13,7 +13,7 @@ const OrderList = () => {
     const [loading, setLoading] = useState(true);
     const [expandedRows, setExpandedRows] = useState({});
     const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
-    const BASE_URL = 'http://localhost:3000/api/'
+    const BASE_URL = 'https://a4celebration.com/api/api/'
 
     useEffect(() => {
         fetchOrders();

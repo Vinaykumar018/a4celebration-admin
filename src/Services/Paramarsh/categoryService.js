@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api/paramarsha';
+const API_BASE_URL = 'https://a4celebration.com/api/api/paramarsha';
 
 const CategoryService = {
   getAllCategories: async (token) => {

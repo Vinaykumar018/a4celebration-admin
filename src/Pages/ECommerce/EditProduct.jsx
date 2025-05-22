@@ -84,14 +84,14 @@ const EditProduct = () => {
         if (product.featuredImage) {
           setImagePreview((prev) => ({
             ...prev,
-            featuredImage: `http://localhost:3000/uploads/${product.featuredImage}`,
+            featuredImage: `https://a4celebration.com/api/uploads/${product.featuredImage}`,
           }));
         }
         if (product.galleryImages && product.galleryImages.length > 0) {
           setImagePreview((prev) => ({
             ...prev,
             galleryImages: product.galleryImages.map(
-              (image) => `http://localhost:3000/uploads/${image}`
+              (image) => `https://a4celebration.com/api/uploads/${image}`
             ),
           }));
         }
@@ -419,7 +419,7 @@ const EditProduct = () => {
                 />
               ) : existingFeaturedImage ? (
                 <img
-                  src={`http://localhost:3000/uploads/${existingFeaturedImage}`}
+                  src={`https://a4celebration.com/api/uploads/${existingFeaturedImage}`}
                   alt="Existing Featured"
                   className="img-thumbnail mt-2"
                   style={{ maxHeight: '100px' }}
@@ -462,7 +462,7 @@ const EditProduct = () => {
                 {existingGalleryImages.map((image, index) => (
                   <div key={`existing-${index}`} className="position-relative me-2 mb-2">
                     <img
-                      src={`http://localhost:3000/uploads/${image}`}
+                      src={`https://a4celebration.com/api/uploads/${image}`}
                       alt={`Existing Gallery ${index + 1}`}
                       className="img-thumbnail"
                       style={{ maxHeight: '100px' }}

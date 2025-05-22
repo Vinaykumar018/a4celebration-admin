@@ -34,7 +34,7 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
               <div className="mb-3">
                 <h6>Image</h6>
                 <img
-                  src={`http://localhost:3000/${category.category_image}`}
+                  src={`https://a4celebration.com/api/${category.category_image}`}
                   alt={category.category_name}
                   width="150"
                   className="img-thumbnail"

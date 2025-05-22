@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const NewVendorTable = () => {
   const [panditData, setPanditData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const IMGURL = 'http://localhost:3000/uploads/panditImages/';
+  const IMGURL = 'https://a4celebration.com/api/uploads/panditImages/';
   const defaultImage = 'https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg';
 
   useEffect(() => {

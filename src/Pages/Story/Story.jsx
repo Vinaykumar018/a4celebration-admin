@@ -76,7 +76,7 @@ const Story = () => {
         row.image ? (
           <img
             className="w-20 h-12 border rounded object-cover"
-            src={`http://localhost:3000${row.image}`}
+            src={`https://a4celebration.com/api${row.image}`}
             alt={row.title}
           />
         ) : (

@@ -79,7 +79,7 @@ const GetCategories = () => {
       selector: row => row.category_image,
       cell: row => (
         <img
-          src={`http://localhost:3000/${row.category_image.replace(/\\/g, '/')}`}
+          src={`https://a4celebration.com/api/${row.category_image.replace(/\\/g, '/')}`}
           alt={row.category_name}
           style={{
             width: '3rem',
@@ -116,7 +116,7 @@ const GetCategories = () => {
           <div className="flex gap-1 whitespace-nowrap py-1 scrollbar-hide flex-1">
             {row.child_category && Object.entries(row.child_category).map(([id, child], index) => {
               const colors = [
-                'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+                'bg-blue-500', 'bg-green-500', 'bg-pink-500',
                 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500',
                 'bg-red-500', 'bg-teal-500'
               ];

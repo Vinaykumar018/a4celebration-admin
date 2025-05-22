@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api/setting';
+const API_BASE_URL = 'https://a4celebration.com/api/api/setting';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

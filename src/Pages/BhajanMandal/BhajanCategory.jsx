@@ -95,7 +95,7 @@ const BhajanCategory = () => {
       cell: (row) => (
         row.bhajan_image ? (
           <img
-            src={`http://localhost:3000/${row.bhajan_image}`}
+            src={`https://a4celebration.com/api/${row.bhajan_image}`}
             alt={row.category}
             width="50"
             height="50"

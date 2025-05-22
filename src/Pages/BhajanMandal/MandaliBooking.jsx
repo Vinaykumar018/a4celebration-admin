@@ -16,12 +16,12 @@ const BookingListBhajanMandal = () => {
   const [moreInfoExpanded, setMoreInfoExpanded] = useState(true);
 
   const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
-  const BASE_URL = `http://localhost:3000/api/`;
+  const BASE_URL = `https://a4celebration.com/api/api/`;
 
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/order/bhajan-mandali`, {
+      const response = await axios.get(`https://a4celebration.com/api/api/order/bhajan-mandali`, {
         headers: { Authorization: token },
       });
 

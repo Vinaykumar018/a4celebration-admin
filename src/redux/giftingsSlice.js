@@ -5,8 +5,8 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-  getProductById
-} from '.././Services/product-api-service'
+  getProductById,
+} from '../Services/gift-api-service';
 
 // Async thunks
 export const fetchProducts = createAsyncThunk(
@@ -18,7 +18,7 @@ export const fetchProducts = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const addProduct = createAsyncThunk(
@@ -30,7 +30,7 @@ export const addProduct = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const modifyProduct = createAsyncThunk(
@@ -42,7 +42,7 @@ export const modifyProduct = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const removeProduct = createAsyncThunk(
@@ -54,7 +54,7 @@ export const removeProduct = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 export const fetchProductById = createAsyncThunk(
@@ -66,7 +66,7 @@ export const fetchProductById = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
-  }
+  },
 );
 
 const initialState = {
@@ -96,7 +96,7 @@ const productsSlice = createSlice({
         if (a[field] > b[field]) return order === 'asc' ? 1 : -1;
         return 0;
       });
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -113,7 +113,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      
+
       // Create product
       .addCase(addProduct.pending, (state) => {
         state.loading = true;
@@ -129,7 +129,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      
+
       // Update product
       .addCase(modifyProduct.pending, (state) => {
         state.loading = true;
@@ -139,7 +139,7 @@ const productsSlice = createSlice({
       .addCase(modifyProduct.fulfilled, (state, action) => {
         state.loading = false;
         const index = state.products.findIndex(
-          product => product._id === action.payload._id
+          (product) => product._id === action.payload._id,
         );
         if (index !== -1) {
           state.products[index] = action.payload;
@@ -150,7 +150,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      
+
       // Delete product
       .addCase(removeProduct.pending, (state) => {
         state.loading = true;
@@ -159,14 +159,14 @@ const productsSlice = createSlice({
       .addCase(removeProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.products = state.products.filter(
-          product => product._id !== action.payload.id
+          (product) => product._id !== action.payload.id,
         );
       })
       .addCase(removeProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      
+
       // Fetch single product
       .addCase(fetchProductById.pending, (state) => {
         state.loading = true;
@@ -184,10 +184,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { 
-  resetProductStatus, 
-  clearCurrentProduct,
-  sortProducts 
-} = productsSlice.actions;
+export const { resetProductStatus, clearCurrentProduct, sortProducts } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `http://localhost:3000/api/pooja`; // 🔧 Fixed `http/` to `http://`
+const BASE_URL = `https://a4celebration.com/api/api/pooja`; // 🔧 Fixed `http/` to `http://`
 const AUTH_TOKEN =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
 
@@ -117,9 +117,12 @@ export const updatePoojaCategoryStatus = async (poojacategoryId, newStatus) => {
 
 export const fetchPoojaBookings = async () => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/orders`, {
-      headers: { Authorization: AUTH_TOKEN },
-    });
+    const response = await axios.get(
+      `https://a4celebration.com/api/api/orders`,
+      {
+        headers: { Authorization: AUTH_TOKEN },
+      },
+    );
     const ordersWithAddresses = await fetchAddresses(response.data);
     return { status: 1, data: ordersWithAddresses };
   } catch (error) {
@@ -133,7 +136,7 @@ const fetchAddresses = async (ordersData) => {
     ordersData.map(async (order) => {
       try {
         const addressResponse = await axios.get(
-          `http://localhost:3000/api/order/delivery-address/${order.bookingId}`,
+          `https://a4celebration.com/api/api/order/delivery-address/${order.bookingId}`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -170,7 +173,7 @@ export const cancelPoojaBooking = async (bookingId) => {
   try {
     // Replace with your actual cancel endpoint
     const response = await axios.put(
-      `http://localhost:3000/api/order/cancel/${bookingId}`,
+      `https://a4celebration.com/api/api/order/cancel/${bookingId}`,
       {},
       {
         headers: { Authorization: AUTH_TOKEN },

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/kundali';
+const API_URL = 'https://a4celebration.com/api/api/kundali';
 
 const getAuthHeader = () => {
   const token =

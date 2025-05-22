@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `http://localhost:3000/api/product`;
+const BASE_URL = `https://a4celebration.com/api/api/product`;
 const AUTH_TOKEN =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
 
@@ -239,7 +239,7 @@ export const updateProduct = async (id, updatedData) => {
 export const updateProductCategoryStatus = async (id, status) => {
   try {
     const response = await axios.patch(
-      `http://localhost:3000/api/product/category/update-status/${id}`,
+      `https://a4celebration.com/api/api/product/category/update-status/${id}`,
       { status }, // sending the status in request body
       {
         headers: {

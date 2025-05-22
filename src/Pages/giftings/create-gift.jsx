@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createProduct } from "../../Services/decoration-api-service";
+import { createProduct } from "../../Services/gift-api-service";
 import { fetchCategories } from '../../redux/categoriesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaRupeeSign } from "react-icons/fa";
 import RichTextEditor from "react-rte";
 
-const CreateDecorations = () => {
+const CreateGifts = () => {
   const dispatch = useDispatch();
   const { categories, loading: categoriesLoading } = useSelector((state) => state.categories);
 
@@ -36,7 +36,7 @@ const CreateDecorations = () => {
 
   // Generate a unique product ID
   const generateProductId = useCallback(() => {
-    const prefix = 'PROD-DECORATION-';
+    const prefix = 'PROD-GIFT-';
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     const timestamp = Date.now().toString().slice(-4);
     return `${prefix}${randomNum}${timestamp}`;
@@ -602,4 +602,4 @@ const CreateDecorations = () => {
   );
 };
 
-export default CreateDecorations;
+export default CreateGifts;

@@ -7,7 +7,7 @@ import { fetchCategories, fetchBhajanMandalById } from '../../Services/bhajanApi
 const BhajanMandaliEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const IMGURL = 'http://localhost:3000';
+  const IMGURL = 'https://a4celebration.com/api';
   const [formData, setFormData] = useState({
     owner_name: "",
     owner_email: "",
@@ -99,7 +99,7 @@ const BhajanMandaliEdit = () => {
     });
 
     try {
-      const response = await fetch(`http://localhost:3000/api/bhajanMandal/update-bhajan/${id}`, {
+      const response = await fetch(`https://a4celebration.com/api/api/bhajanMandal/update-bhajan/${id}`, {
         method: "PUT",
         headers: {
           Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8',

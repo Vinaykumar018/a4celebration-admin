@@ -10,7 +10,7 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess, apiSer
     if (categoryToEdit?.bhajan_image) {
       const imagePath = categoryToEdit.bhajan_image.startsWith("http")
         ? categoryToEdit.bhajan_image
-        : `http://localhost:3000${categoryToEdit.bhajan_image}`;
+        : `https://a4celebration.com/api${categoryToEdit.bhajan_image}`;
       setImagePreview(imagePath);
     } else {
       setImagePreview(null);

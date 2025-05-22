@@ -18,7 +18,7 @@ function Pandit() {
   const [loading, setLoading] = useState(false);
   const [categoryMap, setCategoryMap] = useState({});
 
-  const IMGURL = 'http://localhost:3000/uploads/panditImages/';
+  const IMGURL = 'https://a4celebration.com/api/uploads/panditImages/';
 
   useEffect(() => {
     loadPandits();

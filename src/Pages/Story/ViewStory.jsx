@@ -146,7 +146,7 @@ const ViewStory = () => {
             <div className="story-image-container">
               {story.image ? (
                 <img
-                  src={`http://localhost:3000${story.image}`}
+                  src={`https://a4celebration.com/api${story.image}`}
                   alt={story.title || 'Story cover'}
                   className="story-image"
                 />
@@ -203,7 +203,7 @@ const ViewStory = () => {
                     <div className="substory-image">
                       {substory.images && substory.images.length > 0 ? (
                         <img
-                          src={`http://localhost:3000${substory.images[0]}`}
+                          src={`https://a4celebration.com/api${substory.images[0]}`}
                           alt={substory.title || 'Substory'}
                         />
                       ) : (

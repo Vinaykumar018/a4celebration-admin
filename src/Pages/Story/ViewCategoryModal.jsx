@@ -26,7 +26,7 @@ const ViewCategoryModal = ({ show, onClose, category }) => {
               <div className="col-md-4">
                 {category.image && (
                   <img
-                    src={`http://localhost:3000${category.image}`}
+                    src={`https://a4celebration.com/api${category.image}`}
                     alt={category.title}
                     width="200"
                     className="img-thumbnail"

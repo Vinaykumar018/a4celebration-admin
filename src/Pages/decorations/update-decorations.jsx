@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { fetchProductById, modifyProduct } from '../../redux/productSlice';
+import { fetchProductById, modifyProduct } from '../../redux/decorationSlice';
 import { fetchCategories } from '../../redux/categoriesSlice';
 import { FaRupeeSign } from "react-icons/fa";
 import RichTextEditor from "react-rte";
@@ -68,10 +68,10 @@ const UpdateDecorations = () => {
 
       setImagePreviews({
         featured: currentProduct.featured_image
-          ? `http://localhost:3000/${currentProduct.featured_image}`
+          ? `https://a4celebration.com/api/${currentProduct.featured_image}`
           : null,
         others: currentProduct.other_images?.length > 0
-          ? currentProduct.other_images.map(img => `http://localhost:3000/${img}`)
+          ? currentProduct.other_images.map(img => `https://a4celebration.com/api/${img}`)
           : []
       });
 

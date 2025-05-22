@@ -29,7 +29,7 @@ const AddEditCategoryModal = ({ show, onClose, categoryToEdit, onSuccess }) => {
       if (categoryToEdit.image) {
         const imagePath = categoryToEdit.image.startsWith("http")
           ? categoryToEdit.image
-          : `http://localhost:3000${categoryToEdit.image}`;
+          : `https://a4celebration.com/api${categoryToEdit.image}`;
         setImagePreview(imagePath);
       }
     } else {

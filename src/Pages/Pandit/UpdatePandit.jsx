@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
-const IMGURL = "http://localhost:3000/uploads/panditImages/";
+const IMGURL = "https://a4celebration.com/api/uploads/panditImages/";
 
 const UpdatePandit = () => {
   const { id } = useParams();
@@ -61,7 +61,7 @@ const UpdatePandit = () => {
     const fetchPanditData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/api/pandit/get-pandit/${id}`, {
+        const response = await fetch(`https://a4celebration.com/api/api/pandit/get-pandit/${id}`, {
           headers: {
             Authorization: token,
           },
@@ -274,7 +274,7 @@ const UpdatePandit = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/pandit/update-pandit/${id}`, {
+      const response = await fetch(`https://a4celebration.com/api/api/pandit/update-pandit/${id}`, {
         method: 'PUT',
         headers: {
           Authorization: token,

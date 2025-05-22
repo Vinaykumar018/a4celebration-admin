@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, removeProduct } from '../../redux/decorationSlice';
+import { fetchProducts, removeProduct } from '../../redux/giftingsSlice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const GetDecorations = () => {
+const GetGifts = () => {
 
   console.log("hello")
   const dispatch = useDispatch();
@@ -21,7 +21,9 @@ const GetDecorations = () => {
   }, [dispatch]);
 
   const handleUpdate = (id) => {
-    navigate(`/update/update-product-list/${id}`);
+    navigate(`/update/update-gift-list/${id}`);
+    
+    
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -172,4 +174,4 @@ const GetDecorations = () => {
   );
 }
 
-export default GetDecorations;
+export default GetGifts;

@@ -27,7 +27,7 @@ import {
 import GetTable from '../../Component/GetTable';
 
 const PanditProfileData = () => {
-  const IMGURL = 'http://localhost:3000/uploads/panditImages/';
+  const IMGURL = 'https://a4celebration.com/api/uploads/panditImages/';
   const { id } = useParams();
   const [panditProfileData, setPanditProfileData] = useState(null);
   const [activeTab, setActiveTab] = useState('personal');

@@ -24,7 +24,7 @@ const SliderCategoryList = () => {
   const [rowToView, setRowToView] = useState(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [statusToUpdate, setStatusToUpdate] = useState(null);
-  const IMGURL = 'http://localhost:3000/'
+  const IMGURL = 'https://a4celebration.com/api/'
   const fetchCategoryData = async () => {
     setLoading(true);
     try {

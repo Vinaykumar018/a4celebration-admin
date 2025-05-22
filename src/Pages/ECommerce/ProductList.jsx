@@ -130,7 +130,7 @@ const ProductList = () => {
       name: 'Image',
       cell: (row) => (
         <img
-          src={`http://localhost:3000/${row.featuredImage}`}
+          src={`https://a4celebration.com/api/${row.featuredImage}`}
           alt={row.name}
           width={60}
           height={60}
@@ -317,7 +317,7 @@ const ProductList = () => {
                   <div className="row">
                     <div className="col-md-4 text-center">
                       <img
-                        src={`http://localhost:3000/${rowToView.featuredImage}`}
+                        src={`https://a4celebration.com/api/${rowToView.featuredImage}`}
                         alt={rowToView.name}
                         className="img-fluid rounded"
                         style={{ maxHeight: '200px' }}

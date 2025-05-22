@@ -95,7 +95,7 @@ const ProductCategory = () => {
       cell: (row) => (
         row.category_image ? (
           <img
-            src={`http://localhost:3000/${row.category_image}`}
+            src={`https://a4celebration.com/api/${row.category_image}`}
             alt={row.category_name}
             width="50"
             height="50"

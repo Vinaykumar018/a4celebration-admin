@@ -37,7 +37,7 @@ const ViewCategoryModal = ({ category, closeModal }) => {
               <h6>Featured Image:</h6>
               {category.featurd_image && (
                 <img
-                  src={`http://localhost:3000/${category.featurd_image}`}
+                  src={`https://a4celebration.com/api/${category.featurd_image}`}
                   alt={category.name}
                   style={{ maxWidth: '100%', maxHeight: '300px' }}
                   className="img-thumbnail"

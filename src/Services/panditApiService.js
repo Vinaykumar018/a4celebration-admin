@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api/pandit';
-const POOJA_BASE_URL = 'http://localhost:3000/api/pooja';
+const API_BASE_URL = 'https://a4celebration.com/api/api/pandit';
+const POOJA_BASE_URL = 'https://a4celebration.com/api/api/pooja';
 const token =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoaXZhbnNodSIsImlhdCI6MTczMjE2NTMzOX0.YDu6P4alpQB5QL-74z1jO4LGfEwZA_n_Y29o512FrM8';
 

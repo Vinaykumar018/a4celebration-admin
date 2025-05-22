@@ -59,7 +59,7 @@ function ParamarshCategory() {
         status: category.status.toString(),
         featurd_image: null,
         imagePreview: category.featurd_image
-          ? `http://localhost:3000/${category.featurd_image}`
+          ? `https://a4celebration.com/api/${category.featurd_image}`
           : null
       });
       setIsEditMode(true);
@@ -242,7 +242,7 @@ function ParamarshCategory() {
       cell: (row) => (
         row.featurd_image && (
           <img
-            src={`http://localhost:3000${row.featurd_image}`}
+            src={`https://a4celebration.com/api${row.featurd_image}`}
             alt={row.name}
             style={{ width: '50px', height: '50px', objectFit: 'cover' }}
             className="img-thumbnail"

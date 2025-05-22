@@ -163,7 +163,7 @@ const UpdateCategories = () => {
                 <div className="mt-1 text-xs text-gray-600">
 
                   <img
-                    src={`http://localhost:3000/${currentCategory.category_image}`}
+                    src={`https://a4celebration.com/api/${currentCategory.category_image}`}
                     alt="Current"
                     className="mt-1 w-32 h-32 object-cover rounded border"
                   />

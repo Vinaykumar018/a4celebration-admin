@@ -82,6 +82,17 @@ function SidebarMenu({ collapsed }) {
             
           ]
         },
+         {
+          id: 'Gifts',
+          title: 'Giftings',
+          icon: faHandsPraying,
+          subItems: [
+            { title: 'All Gifts', path: '/get/get-gifts' },
+            { title: 'Add Gifts', path: "/create/create-gift" },
+            { title: 'All Gift Orders', path: "/gift/orders" }
+            
+          ]
+        },
 
        
         // {
