@@ -149,9 +149,8 @@ const GetCategories = () => {
           </div>
         </div>
       ),
-      width: '25rem',
-      minWidth: '15rem',
-      wrap: false,
+      width: "70%",
+      wrap: true,
     }
     ,
     {

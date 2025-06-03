@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, removeProduct } from '../../redux/giftingsSlice';
+import { fetchEvents, removeEvent } from '../../redux/eventSlice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const GetGifts = () => {
+const GetEvents = () => {
 
   console.log("hello")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { products, loading, error } = useSelector((state) => state.products);
+  const { events, loading, error } = useSelector((state) => state.events);
+  console.log(events)
 
-  // Fetch categories on component mount
+  // Fetch categories on component mount 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchEvents());
   }, [dispatch]);
 
   const handleUpdate = (id) => {
-    navigate(`/update/update-gift-list/${id}`);
-
-
+    navigate(`/event/update-event-list/${id}`);
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -36,9 +35,9 @@ const GetGifts = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await dispatch(removeProduct(productToDelete._id)).unwrap();
+      await dispatch(removeEvent(productToDelete._id)).unwrap();
       toast.success('Product deleted successfully!');
-      dispatch(fetchProducts());
+      dispatch(fetchEvents());
     } catch (error) {
       toast.error(error.message || 'Failed to delete category');
     } finally {
@@ -46,6 +45,8 @@ const GetGifts = () => {
       setProductToDelete(null);
     }
   };
+
+
 
 
   const columns = [
@@ -74,13 +75,40 @@ const GetGifts = () => {
       wrap: true,
     },
     {
-      name: 'Price',
-      selector: row => `₹${row.price}`,
+      name: 'City',
+      selector: row => row.city,
       sortable: true,
     },
     {
-      name: 'Stock',
-      selector: row => row.stock_left,
+      name: 'Venue',
+      selector: row => row.venue,
+      sortable: true,
+    },
+    {
+      name: 'Pax',
+      selector: row => row.pax,
+      sortable: true,
+    },
+    {
+      name: 'Rooms',
+      selector: row => row.room,
+      sortable: true,
+    },
+    {
+      name: 'Food Type',
+      selector: row => row.food_type,
+      sortable: true,
+    },
+    {
+      name: 'Includes',
+      selector: row => Object.keys(row.package_includes || {})
+        .filter(key => row.package_includes[key])
+        .join(', ') || '-',
+      wrap: true,
+    },
+    {
+      name: 'Price',
+      selector: row => `₹${row.price.toLocaleString()}`,
       sortable: true,
     },
     {
@@ -124,6 +152,7 @@ const GetGifts = () => {
       button: true,
     }
   ];
+
   return (
     <div>
 
@@ -131,16 +160,16 @@ const GetGifts = () => {
       <div className="card">
         <div className="card-header pb-2 pt-4 card-border">
           <div className='common-flex justify-between item-center'>
-            <h5 className="mb-3">All Products</h5>
+            <h5 className="mb-3">All events</h5>
             <button className='btn btn-info' >
-              All Products
+              All events
             </button>
           </div>
         </div>
         <div className="card-body pt-5 pl-0 pr-0 pt-5">
           <GetTable
             columns={columns}
-            data={products}
+            data={events}
 
             title="Pandits List"
           />
@@ -174,4 +203,4 @@ const GetGifts = () => {
   );
 }
 
-export default GetGifts;
+export default GetEvents;

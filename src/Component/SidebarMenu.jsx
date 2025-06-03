@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
+import {
   faTachometerAlt,
   faComments,
   faAngleRight,
@@ -44,18 +44,7 @@ function SidebarMenu({ collapsed }) {
           icon: faTachometerAlt,
           path: '/dashboard'
         },
-        {
-          id: 'user',
-          title: 'User',
-          icon: faUser,
-          path: '/user'
-        },
-        {
-          id: 'pandit',
-          title: 'Pandit',
-          icon: faUserTie,
-          path: '/pandit'
-        },
+
         {
           id: 'services',
           title: 'Services',
@@ -67,7 +56,7 @@ function SidebarMenu({ collapsed }) {
           subItems: [
             { title: 'All Categories', path: "/get/get-category-list" },
             { title: 'Add Categories', path: '/create/create-category' },
-            
+
           ]
         },
 
@@ -79,10 +68,10 @@ function SidebarMenu({ collapsed }) {
             { title: 'All Decorations', path: '/get/get-decoration' },
             { title: 'Add Decorations', path: "/create/create-decoration" },
             { title: 'All Decoration Orders', path: "/decoration/orders" }
-            
+
           ]
         },
-         {
+        {
           id: 'Gifts',
           title: 'Giftings',
           icon: faHandsPraying,
@@ -90,11 +79,40 @@ function SidebarMenu({ collapsed }) {
             { title: 'All Gifts', path: '/get/get-gifts' },
             { title: 'Add Gifts', path: "/create/create-gift" },
             { title: 'All Gift Orders', path: "/gift/orders" }
-            
+
           ]
         },
 
-       
+        {
+          id: 'Event Management',
+          title: 'Event Management',
+          icon: faHandsPraying,
+          subItems: [
+            { title: 'All Events', path: '/get/get-events' },
+            { title: 'Add Events', path: "/create/create-event" },
+            { title: 'All Events Requests', path: "/event/requests" }
+
+          ]
+        },
+        {
+          id: 'Orders',
+          title: 'All Orders',
+          icon: faHandsPraying,
+          path: "/orders"
+        },
+        {
+          id: 'Customized Events',
+          title: 'Customized Events',
+          icon: faHandsPraying,
+          subItems: [
+            { title: 'All Customized Events', path: '/get/get-custom-events' },
+
+            { title: 'All Customized Events Requests', path: "/event/get-custom-requests" }
+
+          ]
+        },
+
+
         // {
         //   id: 'bhavya-ayojan',
         //   title: 'Bhavya Ayojan',
@@ -221,19 +239,19 @@ function SidebarMenu({ collapsed }) {
     const isActive = activeMenus.includes(item.id);
 
     return (
-      <li 
-        key={item.id} 
+      <li
+        key={item.id}
         className={`sidebar-item ${hasSubItems ? 'has-submenu' : ''} ${isActive ? 'active' : ''}`}
       >
         {item.path && !hasSubItems ? (
-          <a 
-            className="sidebar-link" 
+          <a
+            className="sidebar-link"
             href={item.path}
           >
             {item.icon && (
-              <FontAwesomeIcon 
-                icon={item.icon} 
-                className={`sidebar-icon ${level > 0 ? 'submenu-icon' : ''}`} 
+              <FontAwesomeIcon
+                icon={item.icon}
+                className={`sidebar-icon ${level > 0 ? 'submenu-icon' : ''}`}
               />
             )}
             {!collapsed && (
@@ -245,14 +263,14 @@ function SidebarMenu({ collapsed }) {
             )}
           </a>
         ) : (
-          <div 
+          <div
             className="sidebar-link"
             onClick={() => hasSubItems ? toggleMenu(item.id) : null}
           >
             {item.icon && (
-              <FontAwesomeIcon 
-                icon={item.icon} 
-                className={`sidebar-icon ${level > 0 ? 'submenu-icon' : ''}`} 
+              <FontAwesomeIcon
+                icon={item.icon}
+                className={`sidebar-icon ${level > 0 ? 'submenu-icon' : ''}`}
               />
             )}
             {!collapsed && (
@@ -261,8 +279,8 @@ function SidebarMenu({ collapsed }) {
                   {item.title}
                 </span>
                 {hasSubItems && (
-                  <FontAwesomeIcon 
-                    icon={isActive ? faAngleDown : faAngleRight} 
+                  <FontAwesomeIcon
+                    icon={isActive ? faAngleDown : faAngleRight}
                     className="dropdown-icon"
                   />
                 )}

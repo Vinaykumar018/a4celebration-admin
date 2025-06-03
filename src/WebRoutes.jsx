@@ -42,10 +42,16 @@ import UpdateCategories from './Pages/Categories/update-categories';
 import CreateDecorations from './Pages/decorations/create-decorations';
 import GetDecorations from './Pages/decorations/get-decorations';
 import UpdateDecorations from './Pages/decorations/update-decorations';
-import Orders from './Pages/decoration-orders/Orders';
+import Orders from './Pages/orders/Orders';
 import CreateGifts from './Pages/giftings/create-gift';
 import GetGifts from './Pages/giftings/get-all-gifts';
 import UpdateGifts from './Pages/giftings/update-gift';
+import DecorationOrders from './Pages/decoration-orders/DecorationOrders';
+import GiftOrders from './Pages/gifting-orders/GiftOrders';
+import GetEvents from './Pages/event-management/get-events';
+import CreateEvents from './Pages/event-management/create-event';
+import UpdateEvents from './Pages/event-management/update-events';
+import AllCustomizedRequests from './Pages/customized-event/all-customized-requests';
 
 function WebRoutes() {
   return (
@@ -65,7 +71,7 @@ function WebRoutes() {
       <Route path="/create/create-decoration" element={<CreateDecorations/>}/>
       <Route path="/get/get-decoration" element={<GetDecorations/>}/>
       <Route path="/update/update-product-list/:id" element={<UpdateDecorations/>}/>
-       <Route path="/decoration/orders" element={<Orders/>}/>
+       <Route path="/decoration/orders" element={<DecorationOrders></DecorationOrders>}/>
 
 
 
@@ -74,7 +80,23 @@ function WebRoutes() {
        }/>
         <Route path="/get/get-gifts" element={<GetGifts></GetGifts>}/>
       <Route path="/update/update-gift-list/:id" element={<UpdateGifts></UpdateGifts>}/>
-       <Route path="/gift/orders" element={<Orders/>}/>
+       <Route path="/gift/orders" element={<GiftOrders/>}/>
+
+
+        <Route path="/orders" element={<Orders/>}/>
+
+        <Route path="/get/get-events" element={<GetEvents></GetEvents>}/>
+        <Route path="/create/create-event" element={
+        <CreateEvents></CreateEvents>
+       }/>
+      <Route path="/event/update-event-list/:id" element={<UpdateEvents></UpdateEvents>}/>
+       <Route path="/event/requests" element={<GiftOrders/>}/>
+
+
+       <Route path='/get/get-custom-events' element={<UpdateEvents></UpdateEvents>}/>
+  <Route path="/event/get-custom-requests" element={<AllCustomizedRequests/>}/>
+  <Route path="/event/get-custom-requests/:id" element={<AllCustomizedRequests/>}/>
+  <Route path="/event/get-custom-requests/update/:id" element={<AllCustomizedRequests/>}/>
 
 
 

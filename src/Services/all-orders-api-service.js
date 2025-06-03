@@ -7,7 +7,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 // Get order details by ID
 export const getOrders = async () => {
   try {
-    const response = await axios.get(`${API_URL}get/orders/category/DECORATION`, {
+    const response = await axios.get(`${API_URL}get/all/orders`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: API_KEY,
