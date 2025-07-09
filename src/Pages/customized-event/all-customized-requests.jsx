@@ -225,6 +225,9 @@ const handleUpdateStatus = async (requestId, updateData) => {
   isOpen={isModalOpen}
   onClose={() => setIsModalOpen(false)}
   currentStatus={selectedRequest?.status || 'pending'}
+  
+currentBudgetStatus={selectedRequest?.budget_range}
+
   onUpdateStatus={handleUpdateStatus}
   requestId={selectedRequest?._id}
 />
