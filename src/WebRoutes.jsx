@@ -19,6 +19,16 @@ import GetEvents from './Pages/event-management/get-events';
 import CreateEvents from './Pages/event-management/create-event';
 import UpdateEvents from './Pages/event-management/update-events';
 import AllCustomizedRequests from './Pages/customized-event/all-customized-requests';
+import Users from './Pages/Users/Users';
+import OrderDetails from './Pages/orders/OrderDetails';
+import GetCustomizedRequest from './Pages/customized-event/get-customized-request';
+import ViewDecorations from './Pages/decorations/view-decorations';
+import GiftPreview from './Pages/giftings/view-gift';
+import EventPreview from './Pages/event-management/view-events';
+import CategoryPreview from './Pages/Categories/view-categories';
+import Transaction from './Pages/Transaction/Transaction';
+import Coupons from './Pages/Coupons/Coupons';
+import Contact from './Pages/Contact/Contact';
 
 function WebRoutes() {
   return (
@@ -31,12 +41,14 @@ function WebRoutes() {
       
       <Route path="/create/create-category" element={<CreateCategories/>}/>
       <Route path="/get/get-category-list" element={<GetCategories/>}/>
+      <Route path="/view/view-category-list/:id" element={<CategoryPreview></CategoryPreview>}/>
       <Route path="/update/update-category-list/:id" element={<UpdateCategories/>}/>
 
 
 
       <Route path="/create/create-decoration" element={<CreateDecorations/>}/>
       <Route path="/get/get-decoration" element={<GetDecorations/>}/>
+      <Route path="/view/view-decoration-list/:id" element={<ViewDecorations></ViewDecorations>}/>
       <Route path="/update/update-product-list/:id" element={<UpdateDecorations/>}/>
        <Route path="/decoration/orders" element={<DecorationOrders></DecorationOrders>}/>
 
@@ -47,64 +59,37 @@ function WebRoutes() {
        }/>
         <Route path="/get/get-gifts" element={<GetGifts></GetGifts>}/>
       <Route path="/update/update-gift-list/:id" element={<UpdateGifts></UpdateGifts>}/>
+        <Route path="/view/view-gift-list/:id" element={<GiftPreview></GiftPreview>}/>
        <Route path="/gift/orders" element={<GiftOrders/>}/>
 
 
         <Route path="/orders" element={<Orders/>}/>
+         <Route path="/orders/:orderID" element={<OrderDetails/>}/>
 
         <Route path="/get/get-events" element={<GetEvents></GetEvents>}/>
         <Route path="/create/create-event" element={
         <CreateEvents></CreateEvents>
        }/>
+       <Route path="/view/view-event-list/:id" element={<EventPreview></EventPreview>}/>
       <Route path="/event/update-event-list/:id" element={<UpdateEvents></UpdateEvents>}/>
        <Route path="/event/requests" element={<GiftOrders/>}/>
 
 
        <Route path='/get/get-custom-events' element={<UpdateEvents></UpdateEvents>}/>
   <Route path="/event/get-custom-requests" element={<AllCustomizedRequests/>}/>
-  <Route path="/event/get-custom-requests/:id" element={<AllCustomizedRequests/>}/>
+  <Route path="/event/get-custom-requests/:id" element={<GetCustomizedRequest></GetCustomizedRequest>}/>
   <Route path="/event/get-custom-requests/update/:id" element={<AllCustomizedRequests/>}/>
 
+   <Route path="/users" element={<Users></Users>}/>
+
+<Route path="/coupons" element={<Coupons/>}/>
+   <Route path="/transactions" element={<Transaction/>}/>
+   <Route path="/contacts" element={<Contact></Contact>}/>
 
 
-      {/* <Route path="/paramarsh/category" element={<ParamarshCategory/>}/>
-      <Route path="/paramarsh/paramarsh-request" element={<ParamarshRequest/>}/>
-      <Route path="/user" element={<User/>}/>
-      <Route path="/user/update-user/:id" element={<UserEdit/>}/>
-      <Route path="/user/add-user" element={<AddUser/>}/>
-      <Route path="/user/:id" element={<UserView/>}/>
-      <Route path="/user/bookings/:id" element={<UserBookingList/>}/>
-      <Route path="/pandit" element={<Pandit/>}/>
-      <Route path="/pandit/:id" element={<PanditProfileData/>}/>
-      <Route path="/pandit/update-pandit/:id" element={<UpdatePandit/>}/>
-      <Route path="/pandit/add-pandit" element={<AddPandit/>}/>
+
+
      
-      <Route path="/pooja/add-pooja" element={<AddPooja/>}/>
-      <Route path="/pooja/edit-pooja/:id" element={<EditPooja/>}/> */}
-     
-    
-      {/* <Route path="/bhajan-mandal/edit/:id" element={<BhajanMandaliEdit/>}/>
-      <Route path="/bhajan/add-mandali" element={<AddBhajanMandal/>}/>
-      <Route path="/bhajan/mandali" element={<MandaliList/>}/>
-      <Route path="/bhajan/bhajan-booking" element={<MandaliBooking/>}/>
-      <Route path="/e-commerce/product" element={<ProductList/>}/>
-      <Route path="/e-commerce/order" element={<OrderList/>}/>
-      <Route path="/product/update-product/:id" element={<EditProduct/>}/>
-      <Route path="/order-details/:id" element={<SingleOderDetails/>}/>
-      <Route path="/story/view/:id" element={<ViewStory/>}/>
-      <Route path="/story/edit/:id" element={<EditStory/>}/>
-      <Route path="/story/add-story" element={<AddStory/>}/>
-      <Route path="/slider/slider-category" element={<SliderCategoryList/>}/>
-      <Route path="/slider/slider" element={<Slider/>}/>
-      <Route path="/kundali/kundali-making" element={<Kundali/>}/>
-      <Route path="/kundali/kundali-matching" element={<KundaliMatching/>}/>
-      <Route path="/bhajan/bhajan-category" element={<BhajanCategory/>}/>
-      <Route path="brahman-bhoj/request" element={<BrahmanBhoj/>}/>
-      <Route path="/e-commerce/product-category" element={<ProductCategory/>}/>
-      <Route path="/e-commerce/add-product" element={<ProductAdd/>}/>
-      <Route path='/story/story-category' element={<StoryCategory/>}/>
-      <Route path='/story' element={<Story/>}/> */}
-      {/* Add more protected routes here */}
     </Routes>
   );
 }

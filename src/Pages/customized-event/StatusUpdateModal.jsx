@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaRupeeSign, FaTimes } from 'react-icons/fa';
-
+import { ToastContainer,toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 const StatusUpdateModal = ({ 
   isOpen, 
   onClose, 
@@ -27,27 +28,30 @@ const StatusUpdateModal = ({
     setIsSubmitting(true);
     setError(null);
 
-    try {
-      const updateData = {
-        status,
-        admin_notes: adminNotes,
-       
-        ...(finalPrice && { final_price: Number(finalPrice) })
-      };
+   try {
+  const updateData = {
+    status,
+    admin_notes: adminNotes,
+    ...(finalPrice && { final_price: Number(finalPrice) }),
+  };
 
-      await onUpdateStatus(requestId, updateData);
-      onClose();
-    } catch (err) {
-      setError(err.message || 'Failed to update status');
-    } finally {
-      setIsSubmitting(false);
-    }
+  await onUpdateStatus(requestId, updateData);
+  toast.success("Status updated successfully!", { autoClose: 2000 });
+  setTimeout(onClose, 2000); // 200ms or slightly more
+} catch (err) {
+  toast.error("Failed to update status: " + (err.message || ""), { autoClose: 3000 });
+  setError(err.message || 'Failed to update status');
+} finally {
+  setIsSubmitting(false);
+}
+
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <ToastContainer></ToastContainer>
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center border-b p-4">
           <h3 className="text-lg font-semibold">Update Request Status</h3>

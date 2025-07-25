@@ -24,6 +24,7 @@ const UpdateGifts = () => {
     category: "",
     category_name: "",
     price: "",
+    mrp_price:"",
     unit: "pcs",
     stock_left: "",
     isOffer: false,
@@ -59,6 +60,7 @@ const UpdateGifts = () => {
         category: currentProduct.category || "",
         category_name: currentProduct.category_name || "",
         price: currentProduct.price || "",
+         mrp_price: currentProduct.mrp_price || "",
         unit: currentProduct.unit || "pcs",
         stock_left: currentProduct.stock_left || "",
         isOffer: currentProduct.isOffer || false,
@@ -228,6 +230,7 @@ const UpdateGifts = () => {
       data.append('category', formData.category);
       data.append('category_name', formData.category_name);
       data.append('price', formData.price);
+      data.append('mrp_price', formData.mrp_price);
       data.append('unit', formData.unit);
       data.append('stock_left', formData.stock_left);
       data.append('isOffer', formData.isOffer);
@@ -418,7 +421,37 @@ const UpdateGifts = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                MRP Price <span className="text-red-500">*</span>
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span className="text-gray-500 sm:text-sm"><FaRupeeSign></FaRupeeSign></span>
+                </div>
+                <input
+                  type="number"
+                  name="mrp_price"
+                  value={formData.mrp_price}
+                  onChange={handleChange}
+                  onKeyDown={(e) => {
+                    // Block: '-', 'e', 'E', '+', '.'
+                    if (['-', 'e', 'E', '+', '.'].includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="0"
+                  min="0"
+                  step="1"  // Ensures only whole numbers
+                  required
+
+                />
+              </div>
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Price <span className="text-red-500">*</span>
@@ -432,34 +465,23 @@ const UpdateGifts = () => {
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
+                  onKeyDown={(e) => {
+                    // Block: '-', 'e', 'E', '+', '.' (no decimals or invalid chars)
+                    if (['-', 'e', 'E', '+', '.'].includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="0.00"
+                  placeholder="0"  // Changed from "0.00" since no decimals allowed
                   min="0"
-                  step="0.01"
+                  step="1"  // Forces whole numbers only
                   required
+
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Unit <span className="text-red-500">*</span>
-              </label>
-              <select
-                name="unit"
-                value={formData.unit}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="pcs">Pieces</option>
-                <option value="set">Set</option>
-                <option value="kg">Kilogram</option>
-                <option value="g">Gram</option>
-                <option value="l">Liter</option>
-                <option value="ml">Milliliter</option>
-              </select>
-            </div>
+
           </div>
 
           {/* Stock and Status */}

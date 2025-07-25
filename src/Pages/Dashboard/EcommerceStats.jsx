@@ -1,113 +1,263 @@
-import React from 'react';
-import { 
-  FiShoppingCart, 
-  FiDollarSign, 
-  FiTrendingUp,
-  FiUsers,
-  FiPackage,
-  FiCreditCard
-} from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import { FiCalendar, FiClock, FiList, FiAlertCircle, FiLoader, FiAlertTriangle } from 'react-icons/fi';
+import { getEcommerceOrdersData } from '../../Services/all-orders-api-service';
 
-export const EcommerceStats = ({ stats }) => {
+const COLORS = {
+  primary: '#5D3A7F',
+  secondary: '#8E6CA0',
+  accent: '#B399D4',
+  text: '#333333',
+  textLight: '#5D3A7F',
+  background: '#ffffff',
+  cardBackground: '#f9f9f9',
+  iconBg: '#F0E6F6',
+  success: '#27ae60',
+  warning: '#f39c12',
+  error: '#e74c3c'
+};
+
+export const EcommerceStats = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [stats, setStats] = useState({
+    todayBookings: [],
+    latestOrders: [],
+    orderStatus: {
+      pending: 0,
+      processing: 0,
+      confirmed: 0,
+      shipped: 0,
+      delivered: 0,
+      cancelled: 0
+    }
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getEcommerceOrdersData();
+        console.log("e commerce",response)
+        processOrderData(response);
+      } catch (err) {
+        console.error('Error fetching ecommerce orders:', err);
+        setError(err.message || 'Failed to load ecommerce order data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+   const processOrderData = (orders) => {
+  if (!orders || !orders.length) return;
+
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Process today's ecommerce bookings - now checking product-level dates
+  const todayBookings = orders
+    .flatMap(order => {
+      // For each product in the order, create a booking entry if it's for today
+      return order.orderDetails?.products
+        ?.filter(product => product.order_requested_date === today)
+        .map(product => ({
+          ecommerce: order.productDetails?.find(p => p.productId === product.productId)?.productName || 'Product',
+          status: getStatusLabel(product.order_status || order.orderDetails?.order_status),
+          time: product.order_requested_time || order.orderDetails?.order_requested_time || '--:--',
+          orderId: order.order_id
+        }));
+    })
+    .filter(Boolean) // Remove any undefined entries
+    .sort((a, b) => {
+      const timeA = a.time || '00:00';
+      const timeB = b.time || '00:00';
+      return timeA.localeCompare(timeB);
+    });
+
+  // Process latest ecommerce orders - sorted by date/time (newest first) and take first 3
+  const latestOrders = [...orders]
+    .sort((a, b) => {
+      const dateA = new Date(`${a.orderDetails?.order_requested_date} ${a.orderDetails?.order_requested_time}`);
+      const dateB = new Date(`${b.orderDetails?.order_requested_date} ${b.orderDetails?.order_requested_time}`);
+      return dateB - dateA;
+    })
+    .slice(0, 3)
+    .map(order => ({
+      id: `#${order.order_id}`,
+      amount: `₹${order.paymentDetails?.totalAmount || 0}`,
+      customer: order.userDetails?.username || 'Customer',
+      date: order.orderDetails?.order_requested_date,
+      time: order.orderDetails?.order_requested_time
+    }));
+
+  // Count ecommerce order statuses
+  const statusCounts = orders.reduce((acc, order) => {
+    const status = order.orderDetails?.order_status || 'pending';
+    acc[status] = (acc[status] || 0) + 1;
+    return acc;
+  }, {
+    pending: 0,
+    processing: 0,
+    confirmed: 0,
+    shipped: 0,
+    delivered: 0,
+    cancelled: 0
+  });
+
+  setStats({
+    todayBookings,
+    latestOrders,
+    orderStatus: statusCounts
+  });
+};
+
+    const getStatusLabel = (status) => {
+      switch(status) {
+        case 'processing': return 'Processing';
+        case 'confirmed': return 'Confirmed';
+        case 'shipped': return 'Shipped';
+        case 'delivered': return 'Delivered';
+        case 'cancelled': return 'Cancelled';
+        default: return 'Pending';
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-[200px]">
+      <FiLoader className="animate-spin mr-2" size={24} color={COLORS.primary} />
+      <span className="text-lg" style={{ color: COLORS.primary }}>Loading ecommerce Data...</span>
+    </div>
+  );
+
+  if (error) return (
+    <div className="flex items-center justify-center min-h-[200px]">
+      <FiAlertTriangle className="mr-2" size={24} color={COLORS.error} />
+      <span className="text-lg" style={{ color: COLORS.error }}>{error}</span>
+    </div>
+  );
+
   return (
-    <div className='mb-6'>
-      <h1 className="text-xl font-medium text-gray-800 mb-2">Ecommerce Overview</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-        
-        {/* Sales Summary Column */}
-        <div className="bg-white p-4 rounded border">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-medium flex items-center">
-              <FiDollarSign className="text-green-500 mr-2" />
-              Sales Summary
-            </h2>
+    <div className="mb-8 p-6 bg-white rounded-lg">
+      <h1 className="text-xl font-semibold" style={{ color: COLORS.primary }}>e-commerce Overview</h1>
+      <p className="text-sm text-gray-500 mt-1">Current ecommerce metrics and status</p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
+        {/* Today's ecommerce Bookings Column */}
+        <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+          <div className="flex items-center mb-4">
+            <div className="p-2 rounded-lg mr-3" style={{ backgroundColor: COLORS.iconBg }}>
+              <FiCalendar style={{ color: COLORS.primary }} size={18} />
+            </div>
+            <h2 className="font-medium" style={{ color: COLORS.primary }}>Today's Bookings</h2>
           </div>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500">Total Revenue</span>
-              <span className="font-medium">{stats.totalRevenue}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500">Today's Revenue</span>
-              <span className="font-medium">{stats.todayRevenue}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500">Avg. Order Value</span>
-              <span className="font-medium">$85.60</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500">Conversion Rate</span>
-              <span className="font-medium">3.2%</span>
-            </div>
+
+          <div className="space-y-3">
+            {stats.todayBookings.length > 0 ? (
+              stats.todayBookings.map((booking, index) => (
+                <div key={index} className="p-3 bg-gray-50 rounded">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-sm">{booking.ecommerce}</span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      booking.status === 'Delivered' 
+                        ? 'bg-green-100 text-green-800' 
+                        : booking.status === 'Cancelled'
+                          ? 'bg-red-100 text-red-800'
+                          : booking.status === 'Shipped'
+                            ? 'bg-blue-100 text-blue-800'
+                            : booking.status === 'Confirmed'
+                              ? 'bg-purple-100 text-purple-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {booking.status}
+                    </span>
+                  </div>
+                  <p className="text-gray-500 text-xs flex items-center mt-2">
+                    <FiClock className="mr-1" size={12} />
+                    {booking.time}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <div className="p-3 text-center text-gray-500">
+                No ecommerce bookings for today
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Recent Transactions Column */}
-        <div className="bg-white p-4 rounded border">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-medium flex items-center">
-              <FiShoppingCart className="text-blue-500 mr-2" />
-              Recent Transactions
-            </h2>
+        {/* Recent ecommerce Orders Column */}
+        <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+          <div className="flex items-center mb-4">
+            <div className="p-2 rounded-lg mr-3" style={{ backgroundColor: COLORS.iconBg }}>
+              <FiList style={{ color: COLORS.primary }} size={18} />
+            </div>
+            <h2 className="font-medium" style={{ color: COLORS.primary }}>Recent Orders</h2>
           </div>
+
           <div className="space-y-3">
             {stats.latestOrders.map((order, index) => (
-              <div key={index} className="text-sm">
+              <div key={index} className="p-3 bg-gray-50 rounded">
                 <div className="flex justify-between">
-                  <span className="font-medium">#{order.id.split('-')[1]}</span>
-                  <span className="font-medium">{order.amount}</span>
+                  <span className="font-medium text-sm">{order.id}</span>
+                  <span className="font-medium text-sm" style={{ color: COLORS.primary }}>{order.amount}</span>
                 </div>
-                <div className="flex justify-between text-gray-500 text-xs">
-                  <span>{order.customer}</span>
-                  <span className={`${
-                    order.status === 'Processing' ? 'text-yellow-500' :
-                    order.status === 'Shipped' ? 'text-blue-500' :
-                    'text-green-500'
-                  }`}>
-                    {order.status}
-                  </span>
-                </div>
+                <p className="text-gray-500 text-xs mt-1">{order.customer}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Customer & Inventory Column */}
-        <div className="bg-white p-4 rounded border">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-medium flex items-center">
-              <FiUsers className="text-purple-500 mr-2" />
-              Customers & Inventory
-            </h2>
+        {/* ecommerce Order Status Column */}
+        <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+          <div className="flex items-center mb-4">
+            <div className="p-2 rounded-lg mr-3" style={{ backgroundColor: COLORS.iconBg }}>
+              <FiAlertCircle style={{ color: COLORS.primary }} size={18} />
+            </div>
+            <h2 className="font-medium" style={{ color: COLORS.primary }}>All Order Status</h2>
           </div>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FiUsers className="text-gray-400 mr-2" size={16} />
-                <span>Total Customers</span>
-              </div>
-              <span className="font-medium">{stats.totalUsers}</span>
+
+          <div className="space-y-3">
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+                Pending
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.pending}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FiPackage className="text-gray-400 mr-2" size={16} />
-                <span>Products in Stock</span>
-              </div>
-              <span className="font-medium">1,248</span>
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                Processing
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.processing}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FiTrendingUp className="text-gray-400 mr-2" size={16} />
-                <span>Monthly Growth</span>
-              </div>
-              <span className="font-medium text-green-500">+12.5%</span>
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                Confirmed
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.confirmed}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FiCreditCard className="text-gray-400 mr-2" size={16} />
-                <span>Payment Methods</span>
-              </div>
-              <span className="font-medium">4</span>
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+                Shipped
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.shipped}</span>
+            </div>
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                Delivered
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.delivered}</span>
+            </div>
+            <div className="flex justify-between p-2 bg-gray-50 rounded">
+              <span className="flex items-center text-sm">
+                <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                Cancelled
+              </span>
+              <span className="font-medium" style={{ color: COLORS.primary }}>{stats.orderStatus.cancelled}</span>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import GetTable from '../../Component/GetTable';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { getCustomizedRequests, updateRequestStatus } from '../../Services/customized-api-service';
 import StatusUpdateModal from './StatusUpdateModal';
+import { useNavigate } from 'react-router-dom';
 
 const AllCustomizedRequests = () => {
   const [requestsData, setRequestsData] = useState([]);
@@ -158,10 +159,10 @@ const AllCustomizedRequests = () => {
       width: '120px',
     }
   ];
-
+const navigate=useNavigate()
   const handleView = (requestId) => {
     // Implement view details logic
-    console.log('View request:', requestId);
+    navigate(requestId);
   };
 
  const [isModalOpen, setIsModalOpen] = useState(false);
@@ -231,6 +232,7 @@ currentBudgetStatus={selectedRequest?.budget_range}
   onUpdateStatus={handleUpdateStatus}
   requestId={selectedRequest?._id}
 />
+
     </div>
   );
 };

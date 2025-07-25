@@ -5,7 +5,7 @@ function SidebarHeader() {
     <>
       <div className="logo-wrapper">
         <a href="index.html">
-          <img className="" src="/src/assets/images/logo6.png" alt="Logo" style={{width: "100% !important",height: "50px"}}/>
+          <img className="" src="/src/assets/A4 Celebration 1 (3) (1).png" alt="Logo" style={{width: "100% !important",height: "50px"}}/>
           <img className="max-w-full h-auto for-dark" src="/src/assets/images/logo6.png" alt="Dark Logo"/>
         </a>
         <div className="back-btn">

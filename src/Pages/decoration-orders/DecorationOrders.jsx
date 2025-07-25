@@ -125,31 +125,7 @@ const columns = [
     sortable: true,
     width: '200px',
   },
-  {
-    name: 'Action',
-    cell: row => (
-      <div className="flex gap-2">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
-          onClick={() => handleView(row._id)}
-          title="View Details"
-        >
-          <FaEye />
-        </button>
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white p-2 rounded"
-          onClick={() => handleUpdateStatus(row._id)}
-          title="Update Status"
-        >
-          <FaEdit />
-        </button>
-      </div>
-    ),
-    ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
-    width: '120px',
-  }
+ 
 ];
 
 const handleView = (orderId) => {

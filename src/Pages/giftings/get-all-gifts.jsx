@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, removeProduct } from '../../redux/giftingsSlice';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GetGifts = () => {
 
-  console.log("hello")
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products, loading, error } = useSelector((state) => state.products);
@@ -45,6 +45,10 @@ const GetGifts = () => {
       setShowModal(false);
       setProductToDelete(null);
     }
+  };
+
+   const handleView = (id) => {
+    navigate(`/view/view-gift-list/${id}`);
   };
 
 
@@ -83,26 +87,24 @@ const GetGifts = () => {
       selector: row => row.stock_left,
       sortable: true,
     },
-    {
-      name: 'Slug URL',
-      selector: row => row.slug_url || '-',
-      wrap: true,
-    },
+    
     {
       name: 'Status',
       selector: row => row.status === 'active' ? 'Active' : 'Inactive',
       sortable: true,
     },
-    {
-      name: 'Created At',
-      selector: row => new Date(row.createdAt).toLocaleDateString(),
-      sortable: true,
-      wrap: true,
-    },
+  
     {
       name: 'Action',
       cell: row => (
         <div className="flex gap-2">
+          <button
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded"
+                      onClick={() => handleView(row._id)}
+                      title="View"
+                    >
+                     <FaEye></FaEye>
+                    </button>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
             onClick={() => handleUpdate(row._id)}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateOrderModal = ({ 
   isOpen, 
@@ -22,20 +24,23 @@ const UpdateOrderModal = ({
     ,
   ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setError(null);
 
-    try {
-      await onUpdateStatus(requestId, { status });
-      onClose();
-    } catch (err) {
-      setError(err.message || 'Failed to update status');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+ try {
+  await onUpdateStatus(requestId, { status });
+  toast.success("Status updated successfully!", { autoClose: 2000 });
+  setTimeout(onClose, 2000); // Close after toast finishes
+} catch (err) {
+  toast.error("Failed to update status: " + (err.message || ""), { autoClose: 3000 });
+  setError(err.message || 'Failed to update status');
+} finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   if (!isOpen) return null;
 
@@ -96,6 +101,7 @@ const UpdateOrderModal = ({
           </div>
         </form>
       </div>
+         <ToastContainer />
     </div>
   );
 };

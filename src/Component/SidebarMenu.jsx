@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faTicket,
   faTachometerAlt,
   faComments,
   faAngleRight,
@@ -21,6 +22,16 @@ import {
   faStarOfDavid,
   faShoppingBag,
   faSlidersH,
+  faLayerGroup,
+  faRibbon,
+  faGift,
+  faCalendarAlt,
+  faBoxOpen,
+  faMagic,
+  faUsers,
+  faRupee,
+  faMoneyBillTransfer,
+  faContactCard
 } from '@fortawesome/free-solid-svg-icons';
 
 function SidebarMenu({ collapsed }) {
@@ -44,192 +55,84 @@ function SidebarMenu({ collapsed }) {
           icon: faTachometerAlt,
           path: '/dashboard'
         },
-
-        {
-          id: 'services',
-          title: 'Services',
-        },
         {
           id: 'Category',
           title: 'Category',
-          icon: faHandsPraying,
+          icon: faLayerGroup,
           subItems: [
             { title: 'All Categories', path: "/get/get-category-list" },
             { title: 'Add Categories', path: '/create/create-category' },
-
           ]
         },
-
         {
           id: 'Decoration',
           title: 'Decorations',
-          icon: faHandsPraying,
+          icon: faRibbon,
           subItems: [
             { title: 'All Decorations', path: '/get/get-decoration' },
             { title: 'Add Decorations', path: "/create/create-decoration" },
             { title: 'All Decoration Orders', path: "/decoration/orders" }
-
           ]
         },
         {
           id: 'Gifts',
           title: 'Giftings',
-          icon: faHandsPraying,
+          icon: faGift,
           subItems: [
             { title: 'All Gifts', path: '/get/get-gifts' },
             { title: 'Add Gifts', path: "/create/create-gift" },
             { title: 'All Gift Orders', path: "/gift/orders" }
-
           ]
         },
-
         {
           id: 'Event Management',
           title: 'Event Management',
-          icon: faHandsPraying,
+          icon: faCalendarAlt,
           subItems: [
             { title: 'All Events', path: '/get/get-events' },
             { title: 'Add Events', path: "/create/create-event" },
             { title: 'All Events Requests', path: "/event/requests" }
-
           ]
+        },
+        {
+          id: 'Customized Events',
+          title: 'Customized Event Requests',
+          icon: faMagic,
+          path: "/event/get-custom-requests"
+          
         },
         {
           id: 'Orders',
           title: 'All Orders',
-          icon: faHandsPraying,
+          icon: faBoxOpen,
           path: "/orders"
         },
+        
         {
-          id: 'Customized Events',
-          title: 'Customized Events',
-          icon: faHandsPraying,
-          subItems: [
-            { title: 'All Customized Events', path: '/get/get-custom-events' },
-
-            { title: 'All Customized Events Requests', path: "/event/get-custom-requests" }
-
-          ]
+          id: 'Transactions',
+          title: 'Transactions',
+          icon: faMoneyBillTransfer,
+          path: "/transactions"
         },
-
-
-        // {
-        //   id: 'bhavya-ayojan',
-        //   title: 'Bhavya Ayojan',
-        //   icon: faCalendarCheck,
-        //   subItems: [
-        //     { title: 'Category', path: '#' },
-        //     { title: 'Add Ayojan', path: '#' },
-        //     { title: 'Booking', path: '#' },
-        //   ]
-        // },
-        // {
-        //   id: 'bhajan-mandal',
-        //   title: 'Bhajan Mandal',
-        //   icon: faMusic,
-        //   subItems: [
-        //     { title: 'Category', path: '/bhajan/bhajan-category' },
-        //     { title: 'Add Mandali', path: '/bhajan/add-mandali' },
-        //     { title: 'Mandali', path: '/bhajan/mandali' },
-        //     { title: 'Booking', path: '/bhajan/bhajan-booking' },
-        //   ]
-        // },
-        // {
-        //   id: 'brahman-bhoj',
-        //   title: 'Brahman Bhoj',
-        //   icon: faUtensils,
-        //   path: '/brahman-bhoj/request'
-        // },
-        // {
-        //   id: 'virtual-services',
-        //   title: 'Virtual Services',
-        // },
-        // {
-        //   id:'paramarsh',
-        //   title:'Paramarsh',
-        //   icon:faComments,
-        //   subItems:[
-        //     { title:'Paramarsh category',path:'/paramarsh/category'},
-        //     { title:'Paramarsh Request',path:'/paramarsh/paramarsh-request'}
-        //   ]
-        // },
-        // {
-        //   id:'kundali',
-        //   title:'Kundali',
-        //   icon:faStarOfDavid,
-        //   subItems:[
-        //     { title:'Kunadali Matching',path:'/kundali/kundali-matching'},
-        //     { title:'Kunadali Making',path:'/kundali/kundali-making'}
-        //   ]
-        // },
-        // {
-        //   id: 'ecommerce-section',
-        //   title: 'Ecommerce',
-        // },
-        // {
-        //   id: 'ecommerce',
-        //   title: 'E Commerce',
-        //   icon: faShoppingBag,
-        //   subItems: [
-        //     { title: 'Product Category', path: '/e-commerce/product-category' },
-        //     { title: 'Product', path: '/e-commerce/product' },
-        //     { title: 'Order', path:'/e-commerce/order'},
-        //   ]
-        // },
-        // {
-        //   id: 'story',
-        //   title: 'Stroy',
-        //   icon: faBookOpen,
-        //   subItems: [
-        //     { title: 'Story Category', path: '/story/story-category' },
-        //     { title: 'Story', path: '/story' }
-        //   ]
-        // },
-        // {
-        //   id: 'slider',
-        //   title: 'Slider',
-        //   icon :faSlidersH,
-        //   subItems : [
-        //     {title:'Slider Category', path:'/slider/slider-category'},
-        //     {title:'Slider', path:'/slider/slider'},
-        //   ]
-        // },
-        // {
-        //   id:'enqueries',
-        //   title : 'Enqueries',
-        //   icon:faQuestionCircle,
-        //   path:'/enqueries'
-        // },
-        // {
-        //   id:'about-us',
-        //   title : 'About Us',
-        //   icon:faInfoCircle,
-        //   path:'/about-us'
-        // },
-        // {
-        //   id:'terms-and-conditions',
-        //   title : 'Terms & Conditions',
-        //   icon:faFileContract,
-        //   path:'/terms-and-conditions'
-        // },
-        // {
-        //   id:'privacy-and-policy',
-        //   title : 'Privacy & Policy',
-        //   icon:faUserShield,
-        //   path:'/privacy-and-policy'
-        // },
-        // {
-        //   id:'settings',
-        //   title : 'Settings',
-        //   icon:faCog,
-        //   path:'/settings'
-        // },
-        // {
-        //   id:'logout',
-        //   title : 'Logout',
-        //   icon:faSignOutAlt,
-        //   path:'/logout'
-        // },
+         {
+          id: 'coupons',
+          title: 'All Coupons',
+          icon: faTicket,
+          path: "/coupons"
+        },
+        {
+          id: 'users',
+          title: 'All Users',
+          icon: faUsers,
+          path: "/users"
+        },
+        {
+          id: 'contacts',
+          title: 'All Contact messages',
+          icon: faContactCard,
+          path: "/contacts"
+        }
+         
       ]
     },
   ];

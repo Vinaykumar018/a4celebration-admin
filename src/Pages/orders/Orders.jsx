@@ -3,8 +3,12 @@ import GetTable from '../../Component/GetTable';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { getOrders, updateOrderStatus } from '../../Services/all-orders-api-service';
 import UpdateOrderModal from './UpdateOrderModal';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
+  const navigate=useNavigate()
   const [ordersData, setOrdersData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,9 +58,9 @@ const Orders = () => {
       selector: row => row.orderDetails.order_status,
       cell: row => (
         <span className={`px-2 py-1 rounded-full text-xs ${row.orderDetails.order_status === 'processing' ? 'bg-orange-100 text-orange-800' :
-            row.orderDetails.order_status === 'completed' ? 'bg-green-100 text-green-800' :
-              row.orderDetails.order_status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                'bg-gray-100 text-gray-800'
+          row.orderDetails.order_status === 'completed' ? 'bg-green-100 text-green-800' :
+            row.orderDetails.order_status === 'cancelled' ? 'bg-red-100 text-red-800' :
+              'bg-gray-100 text-gray-800'
           }`}>
           {row.orderDetails.order_status.toUpperCase()}
         </span>
@@ -131,7 +135,9 @@ const Orders = () => {
         <div className="flex gap-2">
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
-            onClick={() => handleView(row._id)}
+            onClick={() => handleView(row.
+              order_id
+            )}
             title="View Details"
           >
             <FaEye />
@@ -153,6 +159,7 @@ const Orders = () => {
   ];
 
   const handleView = (orderId) => {
+    navigate(orderId)
     // Implement view details logic
   };
 
@@ -179,8 +186,9 @@ const Orders = () => {
     try {
       const updatedRequest = await updateOrderStatus(requestId, updateData);
 
+
       // Update the local state
-      setRequestsData(prev =>
+      setOrdersData(prev =>
         prev.map(req =>
           req._id === requestId ? { ...req, ...updatedRequest } : req
         )
@@ -194,6 +202,7 @@ const Orders = () => {
 
   return (
     <div>
+
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -221,7 +230,7 @@ const Orders = () => {
             onClose={() => setIsModalOpen(false)}
             currentStatus={selectedRequest?.status || 'pending'}
 
-           
+
 
             onUpdateStatus={handleUpdateStatus}
             requestId={selectedRequest?._id}

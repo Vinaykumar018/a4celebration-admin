@@ -124,7 +124,7 @@ const Header = () => {
 
           
 
-            <li className="cart-nav onhover-dropdown">
+            {/* <li className="cart-nav onhover-dropdown">
               <div className="cart-box relative">
                 <FontAwesomeIcon icon={faShoppingCart} />
                 <span className="badge rounded-full badge-danger text-white absolute -top-2 -right-2">2</span>
@@ -147,9 +147,9 @@ const Header = () => {
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> */}
 
-            <li className="onhover-dropdown">
+            {/* <li className="onhover-dropdown">
               <div className="notification-box relative">
                 <FontAwesomeIcon icon={faBell} />
                 <span className="badge rounded-full badge-success text-white absolute -top-2 -right-2">4</span>
@@ -159,13 +159,13 @@ const Header = () => {
                 <ul>
                 </ul>
               </div>
-            </li>
+            </li> */}
 
             <li className="profile-nav onhover-dropdown pe-0 py-0">
               <div className="flex profile-media items-center">
-                <img className="w-10 h-10 rounded-full" src="/src/assets/images/logo6.png" style={{width:"30px",height:"30px",borderRadius:"50% !important;"}} alt="Profile" />
+                <img className="w-10 h-10 rounded-full" src="/src/assets/A4 Celebration 1 (3) (1).png" style={{width:"30px",height:"30px",borderRadius:"50% !important;"}} alt="Profile" />
                 <div className="grow w-[calc(100%_-_250px)] ml-2">
-                  <span>Vaidic  Sanskar</span>
+                  <span>A4 Celebration</span>
                   <p className="mb-0 flex items-center">
                     Admin <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
                   </p>

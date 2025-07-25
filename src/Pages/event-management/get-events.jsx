@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEvents, removeEvent } from '../../redux/eventSlice';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,6 +48,11 @@ const GetEvents = () => {
 
 
 
+  const handleView = (id) => {
+    navigate(`/view/view-event-list/${id}`);
+  };
+
+
 
   const columns = [
     {
@@ -73,6 +78,7 @@ const GetEvents = () => {
       selector: row => row.category_name,
       sortable: true,
       wrap: true,
+      width: '180px'
     },
     {
       name: 'City',
@@ -83,6 +89,7 @@ const GetEvents = () => {
       name: 'Venue',
       selector: row => row.venue,
       sortable: true,
+      width:"200px"
     },
     {
       name: 'Pax',
@@ -93,6 +100,7 @@ const GetEvents = () => {
       name: 'Rooms',
       selector: row => row.room,
       sortable: true,
+       width:"150px"
     },
     {
       name: 'Food Type',
@@ -111,26 +119,26 @@ const GetEvents = () => {
       selector: row => `₹${row.price.toLocaleString()}`,
       sortable: true,
     },
-    {
-      name: 'Slug URL',
-      selector: row => row.slug_url || '-',
-      wrap: true,
-    },
+   
     {
       name: 'Status',
       selector: row => row.status === 'active' ? 'Active' : 'Inactive',
       sortable: true,
     },
-    {
-      name: 'Created At',
-      selector: row => new Date(row.createdAt).toLocaleDateString(),
-      sortable: true,
-      wrap: true,
-    },
+   
     {
       name: 'Action',
       cell: row => (
         <div className="flex gap-2">
+
+
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded"
+            onClick={() => handleView(row._id)}
+            title="View"
+          >
+            <FaEye></FaEye>
+          </button>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
             onClick={() => handleUpdate(row._id)}

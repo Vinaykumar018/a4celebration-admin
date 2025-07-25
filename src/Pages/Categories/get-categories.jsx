@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GetTable from '../../Component/GetTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, removeCategory } from '../../redux/categoriesSlice';
-import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa'; // Added FaTimes
+import { FaEdit, FaTrash, FaTimes, FaEye } from 'react-icons/fa'; // Added FaTimes
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -72,6 +72,11 @@ const GetCategories = () => {
   const handleChildCategorySuccess = () => {
     dispatch(fetchCategories());
   };
+
+
+  const handleView = (id) => {
+    navigate(`/view/view-category-list/${id}`);
+  };
   console.log(categories)
   const columns = [
     {
@@ -110,48 +115,50 @@ const GetCategories = () => {
       grow: 1,
     },
     {
-      name: 'Child Categories',
-      cell: row => (
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1 whitespace-nowrap py-1 scrollbar-hide flex-1">
-            {row.child_category && Object.entries(row.child_category).map(([id, child], index) => {
-              const colors = [
-                'bg-blue-500', 'bg-green-500', 'bg-pink-500',
-                'bg-purple-500', 'bg-pink-500', 'bg-indigo-500',
-                'bg-red-500', 'bg-teal-500'
-              ];
-              const color = colors[index % colors.length];
-              return (
-                <span
-                  key={id}
-                  className={`${color} text-white text-[0.6rem] px-1 py-0.5 rounded-full inline-block leading-none`}
-                >
-                  {child.name}
-                </span>
-              );
-            })}
-          </div>
-          <div className="flex gap-1">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded text-sm"
-              onClick={() => handleAddChildCategory(row._id)}
-              title="Edit Child Categories"
-            >
-              <FaEdit size={12} />
-            </button>
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white p-1 rounded text-sm"
-              onClick={() => confirmChildCategoryDelete(row)}
-              title="Remove Child Categories"
-            >
-              <FaTrash size={12} />
-            </button>
-          </div>
-        </div>
-      ),
-      width: "70%",
-      wrap: true,
-    }
+  name: 'Child Categories',
+  cell: row => (
+    <div className="flex items-start justify-start gap-2 flex-wrap w-full">
+      <div className="flex flex-wrap gap-1 py-1 scrollbar-hide max-w-[65%]">
+        {row.child_category &&
+          Object.entries(row.child_category).map(([id, child], index) => {
+            const colors = [
+              'bg-blue-500', 'bg-green-500', 'bg-pink-500',
+              'bg-purple-500', 'bg-pink-500', 'bg-indigo-500',
+              'bg-red-500', 'bg-teal-500'
+            ];
+            const color = colors[index % colors.length];
+            return (
+              <span
+                key={id}
+                className={`${color} text-white text-[0.6rem] px-1 py-0.5 rounded-full leading-none`}
+              >
+                {child.name}
+              </span>
+            );
+          })}
+      </div>
+      <div className="flex gap-1 mt-1">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded text-sm"
+          onClick={() => handleAddChildCategory(row._id)}
+          title="Edit Child Categories"
+        >
+          <FaEdit size={12} />
+        </button>
+        <button
+          className="bg-red-500 hover:bg-red-600 text-white p-1 rounded text-sm"
+          onClick={() => confirmChildCategoryDelete(row)}
+          title="Remove Child Categories"
+        >
+          <FaTrash size={12} />
+        </button>
+      </div>
+    </div>
+  ),
+  width: "70%",
+  wrap: true,
+}
+
     ,
     {
       name: 'Slug URL',
@@ -164,7 +171,7 @@ const GetCategories = () => {
       name: 'Status',
       selector: row => (row.status === '1' ? 'Active' : 'Inactive'),
       sortable: true,
-      width: '6rem',
+      width: '10rem',
       minWidth: '6rem',
       center: true,
     },
@@ -179,6 +186,14 @@ const GetCategories = () => {
       name: 'Action',
       cell: row => (
         <div className="flex gap-1">
+
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-white p-1 rounded text-sm"
+            onClick={() => handleView(row._id)}
+            title="View"
+          >
+           <FaEye></FaEye>
+          </button>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded text-sm"
             onClick={() => handleUpdate(row._id)}
